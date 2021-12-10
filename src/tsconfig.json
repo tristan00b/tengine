@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": ".",
+    "outDir": "../build/public",
+    "tsBuildInfoFile": "../build/cache/tsconfig.app.tsbuildinfo",
+  },
+  "include": [
+    "./**/*.ts",
+  ]
+}

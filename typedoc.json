@@ -1,0 +1,25 @@
+{
+  "name": "Tristris Engine Documentation",
+
+  "entryPoints": [ "src" ],
+  "entryPointStrategy": "expand",
+  "emit": "both",
+
+  "out": "./build/public/docs",
+  "cleanOutputDir": true,
+  "githubPages": false,
+
+  "exclude": "**/*+(index|.spec|.test).ts",
+  "excludeInternal": false,
+  "excludeExternals": true,
+  "externalPattern": [
+    "**/build/**",
+    "**/node_modules/**"
+  ],
+
+  "tsconfig": "./src/tsconfig.json",
+
+  "theme": "default",
+
+  "plugin": ["typedoc-plugin-missing-exports"]
+}

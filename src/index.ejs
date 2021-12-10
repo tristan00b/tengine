@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/style.css">
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjIiIGNsaXAtcnVsZT0iZXZlbm9kZCIgdmlld0JveD0iMCAwIDEyMCAxMjAiPjxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjYwIi8+PGcgZmlsbD0iI2ZmZiIgc3R5bGU9Ii0tZGFya3JlYWRlci1pbmxpbmUtZmlsbDogIzE4MWExYjsiIGRhdGEtZGFya3JlYWRlci1pbmxpbmUtZmlsbD0iIj48cGF0aCBkPSJNNDcuODc5IDI2LjYzMkg3Mi4xMnYyNC4yNDVINDcuODc5ek03NC42NzIgMjYuNjMyaDI0LjI0MXYyNC4yNDVINzQuNjcyek0yMS4wODcgMjYuNjMyaDI0LjI0MXYyNC4yNDVIMjEuMDg3ek00Ny44NzkgNTMuNDE2SDcyLjEydjI0LjI0NUg0Ny44Nzl6TTQ3Ljg3OSA4MC4yMTNINzIuMTJ2MjQuMjQ1SDQ3Ljg3OXoiLz48L2c+PC9zdmc+">
+  <title><%= process.env.PROJECT_NAME %></title>
+</head>
+<body>
+  <header class="page-header"></header>
+  <main class="page-content">
+    <canvas id="game-canvas"></canvas>
+    <debug-info>
+      <frame-rate></frame-rate>
+      <compute-time></compute-time>
+    </debug-info>
+  </main>
+  <footer class="page-footer">
+    <build-info>
+      <build-mode data-build-mode="<%= process.env.BUILD_MODE %>"></build-mode>
+      <build-date data-build-date="<%= process.env.BUILD_DATE %>"></build-date>
+      <build-rev data-build-rev="<%= process.env.BUILD_REV %>"></build-rev>
+    </build-info>
+    <script src="/index.js"></script>
+  </footer>
+  <div>
+    <%- process.env.build %>
+  </div>
+</body>
+</html>
