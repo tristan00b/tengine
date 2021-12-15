@@ -173,7 +173,7 @@ const assets = async () => {
 }
 
 const clean = async () => {
-  del(`${paths.dst.root.public}`)
+  await del(`${paths.dst.public}`)
 }
 
 const docs = async () => {
@@ -251,6 +251,7 @@ const watch = ser(build, par('watch:assets', 'watch:markup', 'watch:scripts', 'w
 
 export {
   build,
+  clean,
   watch,
   watch as default
 }
