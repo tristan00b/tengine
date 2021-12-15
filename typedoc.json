@@ -9,7 +9,7 @@
   "cleanOutputDir": true,
   "githubPages": false,
 
-  "exclude": "**/*+(index|.spec|.test).ts",
+  "exclude": "**/*+(+(index|.spec|.test).ts|.json)",
   "excludeInternal": false,
   "excludeExternals": true,
   "externalPattern": [
