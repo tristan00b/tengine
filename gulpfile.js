@@ -189,9 +189,9 @@ const docs = async () => {
 }
 
 const markup = async () => {
-  return src(`${paths.src.root}/**/*.@(ejs|html)`)
+  return src(`${paths.src.root}/**/*.@(ejs)`)
     .pipe(ejs())
-    .pipe(rename({ extname: '.html' }))
+    .pipe(rename({ extname: '' }))
     .pipe(dst(paths.dst.public))
     .on('error', log.error)
 }
