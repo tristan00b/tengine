@@ -87,7 +87,10 @@ const paths = {
   src: {
     root        : srcroot,
     styles      : path.join(srcroot, './scss'),
-    assets      : path.join(srcroot, './game/assets')
+    assets      : [
+      path.join(srcroot, './engine/assets'),
+      path.join(srcroot, './game/assets')
+    ]
   },
   dst: {
     root        : srcdest,
@@ -143,6 +146,8 @@ const options = {
     'mp3',
     'wav',
     'json',
+    'vert',
+    'frag'
   ]
 }
 
@@ -166,10 +171,11 @@ const sass = gulpSass(dartSass)
 // Gulp Tasks
 // ---------------------------------------------------------------------------------------------------------------------
 
-
 const assets = async () => {
   /** @todo optimize as needed */
-  src(paths.src.assets, { allowEmpty: true }).pipe(dst(paths.dst.assets)).on('error', log.error)
+  return src(paths.src.assets.map(path => `${path}/**/*`), { allowEmpty: true })
+    .pipe(dst(paths.dst.assets))
+    .on('error', log.error)
 }
 
 const clean = async () => {
