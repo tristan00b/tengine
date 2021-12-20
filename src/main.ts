@@ -1,5 +1,3 @@
-/* main.ts */
-
 import { Game } from '@engine/Game'
 import { fail } from '@engine/Utilities'
 
