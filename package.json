@@ -1,5 +1,5 @@
 {
-  "name": "tristris-engine",
+  "name": "tengine",
   "version": "0.1.0",
   "description": "A 3D graphics engine for the web",
   "scripts": {

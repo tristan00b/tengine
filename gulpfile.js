@@ -189,7 +189,7 @@ const defaults     = { url: new URL('http://localhost:4040') }
 const argv         = await configParser(defaults).parse(process.argv)
 
 const config       = {}
-config.projectName = 'Tristris Engine'
+config.projectName = 'TEngine'
 config.srcroot     = path.resolve('./src')
 config.srcdest     = path.resolve('./build')
 config.cache       = path.resolve('./build/cache')

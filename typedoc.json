@@ -1,5 +1,5 @@
 {
-  "name": "Tristris Engine Documentation",
+  "name": "TEngine Documentation",
 
   "entryPoints": [ "src" ],
   "entryPointStrategy": "expand",
