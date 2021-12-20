@@ -1,0 +1,10 @@
+{
+  "build": {
+    "mode": "<%- process?.env?.BUILD_MODE ?? '## value missing ##' %>",
+    "date": "<%- process?.env?.BUILD_DATE ?? '## missing value ##' %>",
+    "vers": "<%- process?.env?.BUILD_REV ?? '## missing value ##' %>"
+  },
+  "baseUrl": "<%- process?.env?.BASE_URL ?? '## missing value ##' %>",
+  "loopOnce": false,
+  "showDebug": false
+}

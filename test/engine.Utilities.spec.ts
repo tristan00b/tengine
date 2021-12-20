@@ -5,7 +5,7 @@ describe('engine.Utilities', () => {
   describe('engine.Utilities.fail', () => {
 
 
-    test('zero argument call', () => {
+    test('Zero argument call', () => {
       expect(() => util.fail()).toThrow()
     })
 
