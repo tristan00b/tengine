@@ -109,8 +109,8 @@ const configParser = (defaults) => {
               : defaults.url.href
 
     return yargs.coerce({
+      host: () => new URL(url),
       url:  () => url,
-      host: () => new URL(url)
     })
   }
 
@@ -181,12 +181,11 @@ const configParser = (defaults) => {
 
 
 
-/// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------------------------------------------------
 
-const defaults     = { url: new URL('http://localhost:4040') }
-const argv         = await configParser(defaults).parse(process.argv)
+const argv         = await configParser({ url: new URL('http://localhost:4040') }).parse(process.argv)
 
 const config       = {}
 config.projectName = 'TEngine'
@@ -347,9 +346,24 @@ const serverStart = async () => {
 }
 
 const serverStop = async () => {
-  await wait(250)
   bsync.exit()
 }
+
+const startServerForLiveTests = async () =>
+  new Promise((resolve, reject) => {
+      argv.live ? resolve() : reject()
+    })
+    .then(serverStart)
+    .then(async (r) => await wait(1000, r))
+    .catch(() => { /* no-op */})
+
+const stopServerForLiveTests = async () =>
+  new Promise((resolve, reject) => {
+      argv.live ? resolve() : reject()
+    })
+    .then(async (r) => await wait(1000, r))
+    .then(serverStop)
+    .catch(() => { /* no-op */})
 
 const serve = async () => {
   serverStart()
@@ -388,7 +402,7 @@ gulp.task('watch:styles', async () => {
 })
 
 const build = ser(clean, setenv, par(assets, markup, scripts, docs, styles))
-const test  = ser(setenv, serverStart, runTests, serverStop)
+const test  = ser(setenv, startServerForLiveTests, runTests, stopServerForLiveTests)
 const watch = ser(build, serve, par('watch:assets', 'watch:markup', 'watch:scripts', 'watch:styles'))
 
 
