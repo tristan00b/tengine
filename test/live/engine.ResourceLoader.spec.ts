@@ -1,5 +1,3 @@
-import 'isomorphic-fetch'
-
 import { ResourceLoader } from '@engine/ResourceLoader'
 
 describe('engine.ResourceLoader', () => {

@@ -260,11 +260,12 @@ pluginOptions.esbuild = {
 }
 
 pluginOptions.jest = {
-  rootDir    : (argv.live ? './test/live' : './test'),
-  showConfig : false,
+  rootDir     : './test',
+  showConfig  : false,
   ...(argv.live
-      ? { testPathIgnorePatterns: [] }
-      : { testPathIgnorePatterns: [ '/live/' ] }),
+          ? { testMatch: ['<rootDir>/live/(*.)+(spec|test).[tj]s?(x)'] }
+          : { testPathIgnorePatterns: [ '<rootDir>/live/'            ] }
+     ),
 }
 
 pluginOptions.sass = {
