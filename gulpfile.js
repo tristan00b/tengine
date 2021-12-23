@@ -30,10 +30,6 @@ const { src, dest:dst, series:ser, parallel:par } = gulp
 // Helpers
 // ---------------------------------------------------------------------------------------------------------------------
 
-const isDevelopmentBuild = () => {
-  return !process.argv.includes('build')
-}
-
 const getBuildRevision = () => {
   return execSync('git rev-parse --short HEAD')
     .toString()
@@ -87,6 +83,8 @@ const wait = (ms, callback) => {
 
 const configParser = (defaults) => {
 
+  const defaultHost = new URL(defaults.host)
+
   const handleFailure = (msg, err, yargs) => {
     msg && console.log(colour.bYellow(msg), '\n')
     err && console.log(err, '\n')
@@ -98,19 +96,22 @@ const configParser = (defaults) => {
     // http://yargs.js.org/docs/#api-reference-checkfn-globaltrue
     // - If URL throws from a malformed url, then the check fails
     // - If neither `port` nor `url` are truthy, then the check fails
-    return !!(argv.port || (argv.url && new URL(argv.url)))
+    return !!(argv.port || (argv.host && new URL(argv.host)))
   }
+
+  const getCommand = (argv) =>
+    argv._[0] ?? 'default'
 
   const coerceOptions = (yargs) => {
     const { argv } = yargs
 
-    const url = argv.url  ? argv.url
-              : argv.port ? `${defaults.url.protocol}//${defaults.url.hostname}:${argv.port}`
-              : defaults.url.href
+    const host = argv.host ? argv.host
+               : argv.port ? `${defaultHost.protocol}//${defaultHost.hostname}:${argv.port}`
+               : defaultHost
 
     return yargs.coerce({
-      host: () => new URL(url),
-      url:  () => url,
+      command : () => getCommand(argv),
+      host    : () => new URL(host),
     })
   }
 
@@ -119,55 +120,59 @@ const configParser = (defaults) => {
   }
 
   const parse = (args) => {
-    const infoString = 'Use `gulp [command] --info` to get usage information'
     const yargs = YARGS(hideBin(args))
 
     return yargs
-      .command(['watch', '$0'],
-        'Launches the test server and watches the source directory for file changes, building the application in development mode when file changes are observed.',
+      .command('watch',
+      'Build in development mode with watch enabled.',
         (yargs) => yargs
           .option('port', {
             describe: 'Sets the port that the test server listens to.',
             default: 4040,
             number: true,
           })
-          .option('url', {
-            describe: 'Sets the base URL of the test server, as well as the base URL to fetch resources from.',
+          .option('host', {
+            describe: 'Sets the address of the test server.',
             type: 'string',
+            default: 'localhost',
             requiresArg: true,
           })
-          .help('info', infoString)
+          .check(checkOptions)
+          .help('info')
       )
       .command('build',
         'Builds the application in production mode.',
         (yargs) => yargs
-          .option('url', {
+          .option('host', {
             describe: 'Sets the base URL to fetch resources from.',
             type: 'string',
             requiresArg: true,
           })
-          .demandOption('url', '- A URL is required for generating the application config.')
-          .help('info', infoString)
+          .demandOption('host', '- A host URL is required for generating the application config.')
+          .check(checkOptions)
+          .help('info')
       )
       .command('test',
         'Runs the test suite',
         (yargs) => yargs
-        .option('url', {
+        .option('host', {
             describe: 'Sets the base URL for tests to fetch resources from. Has no effect without specifying the --live flag.',
             type: 'string',
-            default: defaults.url
+            default: defaultHost
           })
           .option('live', {
             alias: ['L'],
-            description: 'Runs all tests that require a connection to testing server. No online tests will be executed without specifying this option.',
+            description: 'Runs all tests requiring a connection to testing server. No online tests will be executed without specifying this option.',
           })
-          .help('info', infoString)
+          .check(checkOptions)
+          .help('info')
       )
       .hide('version')
+      .hide('help')
       .showHelpOnFail(true)
       .wrap(yargs.terminalWidth())
       .exitProcess(true)
-      .check(checkOptions)
+      .help('info', 'Use `gulp [command] --info` to get command usage information.')
       .fail(handleFailure)
   }
 
@@ -185,17 +190,16 @@ const configParser = (defaults) => {
 // Config
 // ---------------------------------------------------------------------------------------------------------------------
 
-const argv         = await configParser({ url: new URL('http://localhost:4040') }).parse(process.argv)
-
+const argv         = await configParser({ host: 'http://localhost:4040' }).parse(process.argv)
 const config       = {}
+
 config.projectName = 'TEngine'
 config.srcroot     = path.resolve('./src')
 config.srcdest     = path.resolve('./build')
 config.cache       = path.resolve('./build/cache')
 config.public      = path.resolve('./build/public')
 config.host        = argv.host
-config.url         = argv.url
-config.isDevBuild  = isDevelopmentBuild()
+config.isDevBuild  = argv.command === 'serve'
 config.buildMode   = config.isDevBuild ? 'development' : 'production'
 config.assetTypes  = [
   'bmp',
@@ -241,8 +245,7 @@ pluginOptions.bs = {
   open        : false,
   port        : config.host.port,
   ui          : false,
-  // online      : false, // reduce startup time
-  online      : true,
+  online      : false, // reduce startup time
   server: {
     baseDir   : paths.dst.public,
     index     : 'index.html'
@@ -349,21 +352,20 @@ const serverStop = async () => {
   bsync.exit()
 }
 
+const runningLiveTestsLocally =
+  argv.live && argv.host.hostname === 'localhost'
+
 const startServerForLiveTests = async () =>
-  new Promise((resolve, reject) => {
-      argv.live ? resolve() : reject()
-    })
+  new Promise((resolve, reject) => runningLiveTestsLocally ? resolve() : reject())
     .then(serverStart)
-    .then(async (r) => await wait(1000, r))
-    .catch(() => { /* no-op */})
+    .then(async (r) => await wait(100, r))
+    .catch(() => { /* no-op */ })
 
 const stopServerForLiveTests = async () =>
-  new Promise((resolve, reject) => {
-      argv.live ? resolve() : reject()
-    })
-    .then(async (r) => await wait(1000, r))
+  new Promise((resolve, reject) => runningLiveTestsLocally ? resolve() : reject())
+    .then(async (r) => await wait(2000, r))
     .then(serverStop)
-    .catch(() => { /* no-op */})
+    .catch(() => { /* no-op */ })
 
 const serve = async () => {
   serverStart()
@@ -373,7 +375,7 @@ const setenv = async () => {
   process.env.BUILD_MODE = config.buildMode
   process.env.BUILD_DATE = getBuildDate()
   process.env.BUILD_REV  = getBuildRevision()
-  process.env.BASE_URL   = config.url
+  process.env.BASE_URL   = config.host.href
 }
 
 const runTests = async () => {
@@ -406,6 +408,7 @@ const test  = ser(setenv, startServerForLiveTests, runTests, stopServerForLiveTe
 const watch = ser(build, serve, par('watch:assets', 'watch:markup', 'watch:scripts', 'watch:styles'))
 
 
+
 export {
   build,
   clean,
@@ -417,15 +420,11 @@ export {
 
 
 
-{
-  const logBuildOrTestMode = () =>{
-    const command = argv._[0] ?? 'default'
+ (function logBuildOrTestMode (command) {
     switch(command) {
       case 'default' :
       case 'watch'   :
       case 'build'   : log.info(`Building in ${colour.bYellow(config.buildMode)} mode...`         ); break
       case 'test'    : log.info(`Running ${ colour.green(argv.live ? 'live tests' : 'tests') }...`); break
     }
-  }
-  logBuildOrTestMode()
-}
+})(argv.command)

@@ -20,26 +20,20 @@ Getting information on the provided Gulp tasks:
 ```
 $ npx gulp --info
 
-gulp watch
-
-Launches the test server and watches the source directory for file changes, building the
-application in development mode when file changes are observed.
+gulp [command]
 
 Commands:
-  gulp watch  Launches the test server and watches the source directory for file
-              changes, building the application in development mode when file changes
-              are observed.                                                    [default]
+  gulp watch  Build in development mode with watch enabled.
   gulp build  Builds the application in production mode.
   gulp test   Runs the test suite
 
 Options:
-  --help  Show help
-  --port                                                        [number] [default: 4040]
+  --info  Use `gulp [command] --info` to get command usage information.   [boolean]
 ```
 
 The default task is `watch` (i.e. `npx gulp`, also equivalent to `npx gulp watch`).
 
-Some commands have optional and/or required flags. For example `build` requires a `--url <host>` flag which is used in generating an application config file `app.config.json`. This flag is optional for the `watch` and `test` commands (default: `http://localhost:4040`) and specifies the address of the test server in addition to generating `app.config.json`.
+Some commands have optional and/or required flags. For example `build` requires a `--host <host>` flag which is used in generating an application config file `app.config.json`. This flag is optional for the `watch` and `test` commands (default: `http://localhost:4040`) and specifies the address of the test server in addition to generating `app.config.json`.
 
 
 
@@ -48,10 +42,10 @@ Some commands have optional and/or required flags. For example `build` requires 
 There are several NPM scripts that provide convenient shortcuts for running Gulp tasks. These include:
 
 ```
-npm start           # equivalent to `npx gulp` and `npx gulp watch`
-npm run build <url> # equivalent to `npx gulp build --url <url>`
-npm test            # equivalent to `npx gulp test`
-npm run test:live   # equivalent to `npx gulp test --live`
+npm start            # equivalent to `npx gulp` and `npx gulp watch`
+npm run build <host> # equivalent to `npx gulp build --host <host>`
+npm test             # equivalent to `npx gulp test`
+npm run test:live    # equivalent to `npx gulp test --live`
 ```
 
 To include flags for any Gulp tasks via `npm` requires using `--` before specifying the flags. For example, the equivalent to `npx gulp build --info` would be `npm run build -- --info`.
