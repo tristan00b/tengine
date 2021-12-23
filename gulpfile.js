@@ -95,7 +95,7 @@ const configParser = (defaults) => {
   const checkOptions = (argv) => {
     // http://yargs.js.org/docs/#api-reference-checkfn-globaltrue
     // - If URL throws from a malformed url, then the check fails
-    // - If neither `port` nor `url` are truthy, then the check fails
+    // - If neither `port` nor `host` are truthy, then the check fails
     return !!(argv.port || (argv.host && new URL(argv.host)))
   }
 
