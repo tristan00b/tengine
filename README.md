@@ -85,7 +85,7 @@ The project directory structure includes three top-level directories: `build`, `
 
 ## License
 
-- *AGPL-3.0*&mdash;See `LICENSE` file for the terms of use.
+- *AGPL-3.0*&mdash;See [`LICENSE`](https://github.com/tristan00b/tengine/blob/6a24fec483bd94a9c267ee5fe3bdd4c073e0a22f/LICENSE) file for the terms of use.
 
 
 
