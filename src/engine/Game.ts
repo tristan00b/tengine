@@ -1,4 +1,4 @@
-import { fail } from '@engine/Utilities'
+import { fail } from '@engine/util/Errors'
 
 
 /**
@@ -47,8 +47,8 @@ class DebugInfo
   constructor(updatesPerSecond:number = 1)
   {
     this._interval   = updatesPerSecond * 1000
-    this._fpsElement = document.querySelector('debug-info > frame-rate') ?? fail('failed to acquire page element <frame-rate>')
-    this._cpuElement = document.querySelector('debug-info > compute-time') ?? fail('failed to acquire page element <compute-time>')
+    this._fpsElement = document.querySelector('debug-info > frame-rate') ?? fail({ kind: 'GAME_ERROR', message: 'failed to acquire page element <frame-rate>' })
+    this._cpuElement = document.querySelector('debug-info > compute-time') ?? fail({ kind: 'GAME_ERROR', message: 'failed to acquire page element <compute-time>' })
   }
 
   /**
