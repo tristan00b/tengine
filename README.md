@@ -1,5 +1,7 @@
 # TEngine &mdash; *3D graphics engine for the web*
 
+[![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Ftristan00b%2Ftengine%2Fmaster%2Fpackage.json)](https://github.com/tristan00b/tengine)
+
 ## Synopsis
 
 TEngine originally began under the name [Tristris 2](https://github.com/tristan00b/tristris-2), which was meant to be a sequel of sorts to [Tristris](https://github.com/tristan00b/tristris), a web-based Tetris game I had made. From very early on, it grew in the direction of a full-fledged rending engine. However, I had written everything in JavaScript, and as the project grew in complexity, so did the overhead of debugging an untyped language. As such, TEngine begins its life as a rewrite of Tristris 2 in TypeScript. For now this is a solo project, but we'll see how it goes. Maybe it will continue to grow and develop a community around it. Please see the [FAQ](#faq) for more general information.

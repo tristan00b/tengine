@@ -5,6 +5,12 @@
     "rootDir": ".",
     "outDir": "../build/public",
     "tsBuildInfoFile": "../build/cache/tsconfig.app.tsbuildinfo",
+    "plugins": [
+      {
+        "name": "ts-plugin-type-coverage",
+        "historyFile": "../typecoverage.json"
+      }
+    ]
   },
   "include": [
     "./**/*.ts",
