@@ -379,7 +379,7 @@ const setenv = async () => {
   process.env.BASE_URL   = config.host.href
 }
 
-const runTests = async () => {
+const runTests = () => {
   process.env.NODE_ENV = 'test'
   return src(paths.src.tests)
     .pipe(jest(pluginOptions.jest))
