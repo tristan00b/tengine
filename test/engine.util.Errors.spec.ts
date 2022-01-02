@@ -1,7 +1,9 @@
 import { concatErrors,
          Error,
          fail,
-         isError       } from '@engine/util/Errors'
+         IError,
+         isError,
+         splitErrors       } from '@engine/util/Errors'
 
 
 describe('engine.Errors', () => {
@@ -25,26 +27,26 @@ describe('engine.Errors', () => {
 
   describe('engine.Errors.concatErrors', () => {
 
-    const e0 = {
-      kind    : 'Error',
+    const e0: IError<'FATAL_ERROR'> = {
+      kind    : 'FATAL_ERROR',
       message : 'fatal: something broke'
     }
 
-    const e1 = {
-      kind    : 'RangeError',
+    const e1: IError<'BUFFER_ERROR'> = {
+      kind    : 'BUFFER_ERROR',
       message : 'invalid array length',
     }
 
-    const e2 = {
-      kind    : 'SyntaxError',
+    const e2: IError<'FETCH_ERROR'> = {
+      kind    : 'FETCH_ERROR',
       message : 'JSON.parse: bad parsing'
     }
 
-    const expected = {
-      kind    : 'Error',
+    const expected: IError<'FATAL_ERROR'> = {
+      kind    : 'FATAL_ERROR',
       message : 'fatal: something broke\n'
-              + '  [RangeError] invalid array length\n'
-              + '  [SyntaxError] JSON.parse: bad parsing'
+              + '  [BUFFER_ERROR] invalid array length\n'
+              + '  [FETCH_ERROR] JSON.parse: bad parsing'
     }
 
     const result = concatErrors(e0, e1, e2)
@@ -61,9 +63,9 @@ describe('engine.Errors', () => {
 
   describe('engine.Errors.fail', () => {
 
-    const e0 = {
-      kind    : 'SOME_KIND',
-      message : 'An error has occurred'
+    const e0: IError<'FATAL_ERROR'> = {
+      kind    : 'FATAL_ERROR',
+      message : 'An fatal error has occurred'
     }
 
     const expected = `[${e0.kind}] ${e0.message}`
@@ -78,29 +80,29 @@ describe('engine.Errors', () => {
 
     test('Correctly idendifies errors', () => {
 
-      const e0 = {
-        kind: 'Error',
+      const e0: IError<'FATAL_ERROR'> = {
+        kind: 'FATAL_ERROR',
         message: 'This is an error.'
       }
 
-      const e1 = {
-        kind: 'Error',
-        message: ['Multiple', 'errors', 'have', 'occurred.']
-      }
+      const e1 = concatErrors({
+        kind: 'BUFFER_ERROR',
+        message: 'Invalid operation.'
+      }, e0)
 
       const e2 = {
         success: true,
-        result: 'This is not an error.'
+        result: 'This is also not an error.'
       }
 
       const e3 = {
         kind: 'Error',
-        description: 'This is not an error.'
+        description: 'This is also not an error.'
       }
 
       const e4 = {
         hobbit: 'Bilbo Baggins',
-        message: 'This is not an error.'
+        message: 'This is a hobbit.'
       }
 
       expect(isError(e0)).toBe(true)
@@ -108,6 +110,30 @@ describe('engine.Errors', () => {
       expect(isError(e2)).toBe(false)
       expect(isError(e3)).toBe(false)
       expect(isError(e4)).toBe(false)
+    })
+  })
+
+
+  describe('engine.Errors.splitErrors', () => {
+
+    test('', () => {
+
+      const items = [
+        { p: 'prop', n: 0   },
+        { a: 'a',    b: 'b' },
+        new Error('BUFFER_ERROR', 'Buffer underrun'),
+        new Error('SHADER_ERROR', 'Syntax error'   ),
+        new Date(),
+        new Error('CONFIG_ERROR', 'Missing schema' ),
+        100,
+      ]
+      const numErrs = 3
+      const numSucc = 4
+
+      const [errs, succ] = splitErrors(items)
+
+      expect(errs.length).toBe(numErrs)
+      expect(succ.length).toBe(numSucc)
     })
   })
 })
