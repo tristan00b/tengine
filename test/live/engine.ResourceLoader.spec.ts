@@ -1,4 +1,5 @@
 import { ResourceLoader } from '@engine/ResourceLoader'
+import { isError        } from '@engine/util/Errors'
 
 describe('engine.ResourceLoader', () => {
 
@@ -7,7 +8,7 @@ describe('engine.ResourceLoader', () => {
   test('it loads a resource file', async () => {
     return ResourceLoader
       .load(new URL('/assets/shaders/basic.vert', baseUrl), { headers: { 'Content-Type': 'text/plain' }})
-      .then(resp => resp.text())
-      .then(text => expect(text.startsWith('#version 300 es')).toBeTruthy())
+      .then(async resp => isError(resp) ? fail(resp) : await resp.text())
+      .then(async text => expect(text.startsWith('#version 300 es')).toBeTruthy())
   })
 })
