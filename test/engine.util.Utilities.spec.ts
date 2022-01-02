@@ -1,5 +1,5 @@
 import { fromHex,
-         toHex    } from '@engine/util/Types'
+         toHex    } from '@engine/util/Utilities'
 
 
 describe('engine.util.Types', () => {
