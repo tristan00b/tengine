@@ -1,3 +1,19 @@
+import { Error,
+         type IError } from './Errors'
+
+/**
+ * Attempts to get the extension from a given path by splitting on the '.' character.
+ * @param path
+ * @returns The extension, if found
+ */
+export function extensionFromPath(path: string): string | IError<'TYPE_ERROR'> {
+  const components = path.split('.')
+  return (components.length > 1)
+    ? components.pop()! // never undefined, but typescript cannot determine this
+                        // https://github.com/microsoft/TypeScript/issues/47292
+    : new Error('TYPE_ERROR', `Unable to determine extension for path (${path})`)
+}
+
 /**
  * @param value The number to convert to hex
  * @returns A string represention of `value` in hexadecimal
