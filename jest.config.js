@@ -7,11 +7,11 @@ export default {
   moduleNameMapper: {
     '^@engine/(.*)$': [
       // Offline tests
-      '../src/engine/$1.ts',
-      '../src/engine/$1.js',
+      '<rootDir>/../src/engine/$1.ts',
+      '<rootDir>/../src/engine/$1.js',
       // Online (live) tests
-      '../../src/engine/$1.ts',
-      '../../src/engine/$1.js',
+      '<rootDir>/../../src/engine/$1.ts',
+      '<rootDir>/../../src/engine/$1.js',
     ]
   },
 }
