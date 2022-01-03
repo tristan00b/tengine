@@ -38,7 +38,7 @@ export function fromHex(value: string): number
  * @param isKind Determes whether an element of `items` is of type `Kind`
  * @returns
  */
-export function split<Kind>(isKind: (item: unknown) => item is Kind, items: unknown[])
+export function split<Kind>(isKind: (item: unknown) => item is Kind, items: unknown[]): [Kind[], unknown[]]
 {
   const lft: Kind[]    = []
   const rgt: unknown[] = []
