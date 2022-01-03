@@ -27,6 +27,11 @@ describe('engine.Errors', () => {
 
   describe('engine.Errors.concatErrors', () => {
 
+    test('Gives TYPE_ERROR on zero-argument call', () => {
+      const result = concatErrors()
+      expect(result.kind).toBe('TYPE_ERROR')
+    })
+
     const e0: IError<'FATAL_ERROR'> = {
       kind    : 'FATAL_ERROR',
       message : 'fatal: something broke'

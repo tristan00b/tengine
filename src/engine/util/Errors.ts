@@ -80,12 +80,14 @@ export const isError = <E extends string>(obj: unknown): obj is IError<E> =>
  *
  * @param fst The first error
  * @param rest Errors to concatenate with `fst`
- * @returns T concatenated error
+ * @returns The concatenated error or TYPE_ERROR if no arguments given
  */
-export const concatErrors = <E extends string>(fst: IError<E>, ...rest: IError<E>[]): IError<E> =>
-  new Error(
-    fst.kind,
-    [fst.message, ...rest.map(Error.toString)].join('\n  '))
+export const concatErrors = <E extends string>(...errors: IError<E>[]): IError<E | 'TYPE_ERROR'> =>
+  errors.length === 0
+    ? new Error('TYPE_ERROR', 'Attempt to concat errors on empty array')
+    : new Error(errors[0].kind,
+        [errors[0].message, ...errors.slice(1).map(Error.toString)].join('\n  '))
+
 
 /**
  * A convenience function for emulating JavaScript throw expressions.
