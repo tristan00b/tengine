@@ -34,7 +34,7 @@ describe('engine.Errors', () => {
 
     const e0: IError<'FATAL_ERROR'> = {
       kind    : 'FATAL_ERROR',
-      message : 'fatal: something broke'
+      message : 'something broke'
     }
 
     const e1: IError<'BUFFER_ERROR'> = {
@@ -49,7 +49,7 @@ describe('engine.Errors', () => {
 
     const expected: IError<'FATAL_ERROR'> = {
       kind    : 'FATAL_ERROR',
-      message : 'fatal: something broke\n'
+      message : 'something broke\n'
               + '  [BUFFER_ERROR] invalid array length\n'
               + '  [FETCH_ERROR] JSON.parse: bad parsing'
     }
