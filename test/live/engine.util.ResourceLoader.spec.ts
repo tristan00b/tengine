@@ -1,5 +1,5 @@
-import { ResourceLoader } from '@engine/ResourceLoader'
 import { isError        } from '@engine/util/Errors'
+import { ResourceLoader } from '@engine/util/ResourceLoader'
 
 describe('engine.ResourceLoader', () => {
 
