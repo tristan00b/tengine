@@ -199,7 +199,7 @@ config.srcdest     = path.resolve('./build')
 config.cache       = path.resolve('./build/cache')
 config.public      = path.resolve('./build/public')
 config.host        = argv.host
-config.isDevBuild  = argv.command === 'serve'
+config.isDevBuild  = argv.command !== 'build'
 config.buildMode   = config.isDevBuild ? 'development' : 'production'
 config.assetTypes  = [
   'bmp',
@@ -293,6 +293,8 @@ const esbuild = createGulpEsbuild({ incremental: config.isDevBuild })
 const jest    = gulpJest.default
 const sass    = gulpSass(dartSass)
 const bsync   = bs.create(pluginOptions.bs.servername)
+
+
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Gulp Tasks
@@ -408,8 +410,6 @@ const build = ser(clean, setenv, par(assets, markup, scripts, docs, styles))
 const test  = ser(setenv, startServerForLiveTests, runTests, stopServerForLiveTests)
 const watch = ser(build, serve, par('watch:assets', 'watch:markup', 'watch:scripts', 'watch:styles'))
 
-
-
 export {
   build,
   clean,
@@ -419,9 +419,7 @@ export {
   watch as default,
 }
 
-
-
- (function logBuildOrTestMode (command) {
+;(function logBuildOrTestMode (command) {
     switch(command) {
       case 'default' :
       case 'watch'   :
