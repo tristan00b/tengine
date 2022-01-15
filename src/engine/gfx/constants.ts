@@ -137,3 +137,13 @@ export const MAX_FRAGMENT_UNIFORM_VECTORS: GLenum                    = 0x8DFD
 export const SHADER_TYPE: GLenum                                     = 0x8B4F
 export const SHADING_LANGUAGE_VERSION: GLenum                        = 0x8B8C
 export const CURRENT_PROGRAM: GLenum                                 = 0x8B8D
+
+
+/* Errors ----------------------------------------------------------------------------------------------------------- */
+
+export const NO_ERROR: GLenum                                        = 0
+export const INVALID_ENUM: GLenum                                    = 0x0500
+export const INVALID_VALUE: GLenum                                   = 0x0501
+export const INVALID_OPERATION: GLenum                               = 0x0502
+export const OUT_OF_MEMORY: GLenum                                   = 0x0505
+export const CONTEXT_LOST_WEBGL: GLenum                              = 0x9242
