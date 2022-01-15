@@ -84,6 +84,7 @@
     "typecov": "^0.2.3",
     "typedoc": "^0.22.10",
     "typedoc-plugin-missing-exports": "^0.22.6",
+    "typey-doo": "^0.1.10",
     "yargs": "^17.3.0"
   }
 }
