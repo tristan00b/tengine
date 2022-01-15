@@ -12,11 +12,11 @@ describe('engine.Errors', () => {
 
     const kind     = 'BUFFER_ERROR'
     const message  = 'Buffer overflow!'
-    const expected = `[${kind}] ${message}`
+    const expected = `[${ kind }] ${ message }`
     const error    = new Error(kind, message)
 
     test('Can produce string representation of itself', () => {
-      expect(`${error}`).toBe(expected)
+      expect(`${ error }`).toBe(expected)
     })
 
     test('Can produce string representation of IError', () => {
@@ -73,7 +73,7 @@ describe('engine.Errors', () => {
       message : 'An fatal error has occurred'
     }
 
-    const expected = `[${e0.kind}] ${e0.message}`
+    const expected = `[${ e0.kind }] ${ e0.message }`
 
     test('Throws an error', () => {
       expect(() => fail(e0)).toThrow(expected)

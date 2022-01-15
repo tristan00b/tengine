@@ -2,25 +2,19 @@ import { fromHex,
          toHex    } from '@engine/util/Utilities'
 
 
-describe('engine.util.Types', () => {
+describe('engine.util.Utilities', () => {
 
-  const ival = 32
-  const hexstr = '0x20'
+  describe('engine.util.Utilities.fromHex', () => {
 
-  describe('engine.util.Types.fromHex', () => {
-
-    test('Converts a hexadecimal string to a number', () => {
-      expect(fromHex(hexstr)).toBe(ival)
+    test('converts a hexadecimal string to a number', () => {
+      expect(fromHex('0x20')).toBe(32)
     })
   })
 
+  describe('engine.util.Utilities.toHext', () => {
 
-  describe('engine.util.Types.toHext', () => {
-
-    test('Converts a numeric value to a hexadecimal string', () => {
-      expect(toHex(ival)).toBe(hexstr)
+    test('converts a numeric value to a hexadecimal string', () => {
+      expect(toHex(32)).toBe('0x20')
     })
-
   })
-
 })

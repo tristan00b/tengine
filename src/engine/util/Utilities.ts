@@ -7,29 +7,29 @@ import { Error,
  * @returns The extension, if found
  */
 export function extensionFromPath(path: string): string | IError<'TYPE_ERROR'> {
-  const components = path.split('.')
-  return (components.length > 1)
-    ? components.pop()! // never undefined, but typescript cannot determine this
-                        // https://github.com/microsoft/TypeScript/issues/47292
-    : new Error('TYPE_ERROR', `Unable to determine extension for path (${path})`)
-}
-
-/**
- * @param value The number to convert to hex
- * @returns A string represention of `value` in hexadecimal
- */
-export function toHex(value: number): `0x${string}`
-{
-  return `0x${value.toString(16)}`
+  const extension = path.split('.').pop()
+  return (extension)
+    ? extension // TS cannot determine this that this will never be undefined
+                // See: https://github.com/microsoft/TypeScript/issues/47292
+    : new Error('TYPE_ERROR', `Unable to determine extension for path (${ path })`)
 }
 
 /**
  * @param value A hexadecimal string optionally prefixed by '0x'
- * @returns An integer
+ * @returns A numeric representation of `value`
  */
-export function fromHex(value: string): number
+ export function fromHex(value: string): number
+ {
+   return parseInt(value, 16)
+ }
+
+/**
+ * @param value The number to convert to hex
+ * @returns A hex string represention of `value`
+ */
+export function toHex(value: number): `0x${ string }`
 {
-  return parseInt(value, 16)
+  return `0x${ value.toString(16) }`
 }
 
 /**
