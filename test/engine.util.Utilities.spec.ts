@@ -1,8 +1,18 @@
-import { fromHex,
+import { isArray,
+         fromHex,
          toHex    } from '@engine/util/Utilities'
 
 
 describe('engine.util.Utilities', () => {
+
+  describe('engine.util.Utilities.isArray', () => {
+
+    test('determines whether a value is an array', () => {
+      expect(isArray({})).toBe(false)
+      expect(isArray([])).toBe(true)
+      expect(isArray(new Int8Array)).toBe(true)
+    })
+  })
 
   describe('engine.util.Utilities.fromHex', () => {
 

@@ -33,6 +33,24 @@ export function toHex(value: number): `0x${ string }`
 }
 
 /**
+ * Type guard for both arrays and buffer array views
+ * @param it The object under test
+ */
+export function isArray<T extends ArrayLike<unknown>|ArrayBufferLike>(it: object): it is T
+{
+  return Array.isArray(it) || isBufferArrayView(it)
+}
+
+/**
+ * Type guard for buffer array views
+ * @param it The object under test
+ */
+export function isBufferArrayView(it: object): it is ArrayBufferLike
+{
+  return 'byteLength' in it && 'byteOffset' in it
+}
+
+/**
  * Splits an array into two&mdash;the first of type `Kind[]` and the second of all remaining elements.
  * @param items The items from which you want to split out all instances of `Kind`
  * @param isKind Determes whether an element of `items` is of type `Kind`
