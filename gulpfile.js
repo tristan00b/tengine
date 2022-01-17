@@ -52,13 +52,13 @@ const loadTSConfigForBasePath = (basePath) => {
   file.error && fail(file.error)
 
   const cnf = ts.parseJsonConfigFileContent(file.config, ts.sys, basePath)
-  cnf?.errors?.length && fail(`failed to parse tsconfig\n${cnf.errors.map(e => `  ${e.messageText}\n`)}`)
+  cnf?.errors?.length && fail(`failed to parse tsconfig\n${ cnf.errors.map(e => `  ${ e.messageText }\n`) }`)
 
   return cnf
 }
 
 class colour {
-  static c(colour, msg) { return `\u001b[${colour}m${msg}\u001b[0m` }
+  static c(colour, msg) { return `\u001b[${ colour }m${ msg }\u001b[0m` }
   static b(colour, msg) { return this.c(colour + ';1', msg)         }
 
   static red(msg)       { return this.c(31, msg) }
@@ -106,7 +106,7 @@ const configParser = (defaults) => {
     const { argv } = yargs
 
     const host = argv.host ? argv.host
-               : argv.port ? `${defaultHost.protocol}//${defaultHost.hostname}:${argv.port}`
+               : argv.port ? `${ defaultHost.protocol }//${ defaultHost.hostname }:${ argv.port }`
                : defaultHost
 
     return yargs.coerce({
@@ -240,7 +240,7 @@ const paths = {
 const pluginOptions = {}
 
 pluginOptions.bs = {
-  servername  : `${config.projectName}`,
+  servername  : `${ config.projectName }`,
   listen      : config.host.hostname,
   open        : false,
   port        : config.host.port,
@@ -273,7 +273,7 @@ pluginOptions.sass = {
 }
 
 pluginOptions.typedoc = {
-  name        : `${config.projectName} Documentation`,
+  name        : `${ config.projectName } Documentation`,
   out         :  paths.dst.docs,
   emit        : 'both',
   theme       : 'default',
@@ -303,23 +303,23 @@ const bsync   = bs.create(pluginOptions.bs.servername)
 // API Tasks -----------------------------------------------------------------------------------------------------------
 const assets = async () => {
   /** @todo optimize as needed */
-  return src(paths.src.assets.map(path => `${path}/**/*`), { allowEmpty: true })
+  return src(paths.src.assets.map(path => `${ path }/**/*`), { allowEmpty: true })
     .pipe(dst(paths.dst.assets))
     .on('error', log.error)
 }
 
 const clean = async () => {
-  await del(`${paths.dst.public}`)
+  await del(`${ paths.dst.public }`)
 }
 
 const docs = async () => {
-  return src(`${paths.src.root}/engine/**/*.ts`)
+  return src(`${ paths.src.root }/engine/**/*.ts`)
     .pipe(typedoc(pluginOptions.typedoc))
     .on('error', log.error)
 }
 
 const markup = async () => {
-  return src(`${paths.src.root}/**/*.@(ejs)`)
+  return src(`${ paths.src.root }/**/*.@(ejs)`)
     .pipe(ejs())
     .pipe(rename({ extname: '' }))
     .pipe(dst(paths.dst.public))
@@ -327,14 +327,14 @@ const markup = async () => {
 }
 
 const scripts = async () => {
-  return src(`${paths.src.root}/main.ts`)
+  return src(`${ paths.src.root }/main.ts`)
     .pipe(esbuild(pluginOptions.esbuild))
     .pipe(dst(paths.dst.public))
     .on('error', log.error)
 }
 
 const styles = async () => {
-  return src(`${paths.src.styles}/**/*.@(css|scss)`)
+  return src(`${ paths.src.styles }/**/*.@(css|scss)`)
     .pipe(gulpif(config.isDevBuild, sourcemaps.init()))
     .pipe(sass(pluginOptions.sass))
     .pipe(autoprefix())
@@ -390,20 +390,20 @@ const runTests = () => {
 
 gulp.task('watch:assets', async () => {
   /** @todo optimize as needed */
-  const pathGlob = `${paths.src.root}/**/*.@(${config.assetTypes})`
+  const pathGlob = `${ paths.src.root }/**/*.@(${ config.assetTypes })`
   gulp.watch(pathGlob, ser(assets, refreshBrowser))
 })
 
 gulp.task('watch:markup', async () => {
-  gulp.watch(`${paths.src.root}/**/*.@(ejs|html)`, ser(markup, refreshBrowser))
+  gulp.watch(`${ paths.src.root }/**/*.@(ejs|html)`, ser(markup, refreshBrowser))
 })
 
 gulp.task('watch:scripts', async () => {
-  gulp.watch(`${paths.src.root}/**/*.@(ts|js)`, ser(par(scripts, docs), refreshBrowser))
+  gulp.watch(`${ paths.src.root }/**/*.@(ts|js)`, ser(par(scripts, docs), refreshBrowser))
 })
 
 gulp.task('watch:styles', async () => {
-  gulp.watch(`${paths.src.styles}/**/*.@(css|scss)`, styles)
+  gulp.watch(`${ paths.src.styles }/**/*.@(css|scss)`, styles)
 })
 
 const build = ser(clean, setenv, par(assets, markup, scripts, docs, styles))
@@ -423,7 +423,7 @@ export {
     switch(command) {
       case 'default' :
       case 'watch'   :
-      case 'build'   : log.info(`Building in ${colour.bYellow(config.buildMode)} mode...`         ); break
+      case 'build'   : log.info(`Building in ${ colour.bYellow(config.buildMode) } mode...`       ); break
       case 'test'    : log.info(`Running ${ colour.green(argv.live ? 'live tests' : 'tests') }...`); break
     }
 })(argv.command)
