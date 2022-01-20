@@ -22,11 +22,9 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2
       # Runs a set of commands using the runners shell
-      - name: Run type checks
+      - name: Run coverage check
         run: |
-          npm ci
-          npx codechecks
-        env:
-          CC_SECRET: ${{ secrets.CC_SECRET }}
+          npm install
+          npx type-coverage --strict
       - name: Run unit tests
         run:  npm test

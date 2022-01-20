@@ -50,7 +50,6 @@
     ]
   },
   "devDependencies": {
-    "@codechecks/client": "^0.1.12",
     "@types/gulp": "^4.0.9",
     "@types/isomorphic-fetch": "^0.0.35",
     "@types/jest": "^27.0.3",
@@ -79,7 +78,6 @@
     "ts-node": "^10.4.0",
     "ts-plugin-type-coverage": "^2.18.3",
     "type-coverage": "^2.19.0",
-    "typecov": "^0.2.3",
     "typedoc": "^0.22.10",
     "typedoc-plugin-missing-exports": "^0.22.6",
     "typey-doo": "^0.3.0",
