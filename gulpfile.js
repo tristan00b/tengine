@@ -6,11 +6,9 @@ import ejs                   from 'gulp-ejs'
 import { createGulpEsbuild } from 'gulp-esbuild'
 import gulp                  from 'gulp'
 import log                   from 'gulplog'
-import gulpif                from 'gulp-if'
 import gulpJest              from 'gulp-jest'
 import rename                from 'gulp-rename'
 import gulpSass              from 'gulp-sass'
-import sourcemaps            from 'gulp-sourcemaps'
 import typedoc               from 'gulp-typedoc'
 import path                  from 'path'
 import dartSass              from 'sass'
@@ -334,12 +332,10 @@ const scripts = async () => {
 }
 
 const styles = async () => {
-  return src(`${ paths.src.styles }/**/*.@(css|scss)`)
-    .pipe(gulpif(config.isDevBuild, sourcemaps.init()))
+  return src(`${ paths.src.styles }/**/*.@(css|scss)`, { sourcemaps: config.isDevBuild })
     .pipe(sass(pluginOptions.sass))
     .pipe(autoprefix())
-    .pipe(gulpif(config.isDevBuild, sourcemaps.write()))
-    .pipe(dst(paths.dst.styles))
+    .pipe(dst(paths.dst.styles), { sourcemaps: config.isDevBuild })
     .pipe(bsync.stream())
 }
 
