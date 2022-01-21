@@ -10,7 +10,8 @@
         "name": "ts-plugin-type-coverage",
         "historyFile": "../typecoverage.json"
       }
-    ]
+    ],
+    "types" : []
   },
   "include": [
     "./**/*.ts",
