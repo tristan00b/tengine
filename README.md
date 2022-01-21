@@ -1,6 +1,7 @@
 # TEngine &mdash; *3D graphics engine for the web*
 
-[![Type Coverage](https://img.shields.io/badge/dynamic/json.svg?label=Type%20Coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Ftristan00b%2Ftengine%2Fmaster%2Fpackage.json)](https://github.com/tristan00b/tengine)  [![Tests](https://github.com/tristan00b/tengine/actions/workflows/tests.yml/badge.svg)](https://github.com/tristan00b/tengine/actions/workflows/tests.yml)
+[![Tests](https://github.com/tristan00b/tengine/actions/workflows/tests.yml/badge.svg)](https://github.com/tristan00b/tengine/actions/workflows/tests.yml)
+[![Type Coverage](https://img.shields.io/badge/dynamic/json.svg?label=Type%20Coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Ftristan00b%2Ftengine%2Fmaster%2Fpackage.json)](https://github.com/tristan00b/tengine)
 
 ## Synopsis
 
