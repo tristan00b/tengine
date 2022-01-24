@@ -14,4 +14,11 @@ export default {
       '<rootDir>/../../src/engine/$1.js',
     ]
   },
+  transform: {
+    '\\.jsx?$': 'babel-jest',
+    '\\.tsx?$': 'ts-jest',
+  },
+  'transformIgnorePatterns': [
+    '/node_modules/(?!(typey-doo)/)',
+  ]
 }
