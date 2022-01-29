@@ -28,7 +28,7 @@
       "ts-nocheck": "allow-with-description"
     }],
 
-      "@typescript-eslint/ban-types": [
+    "@typescript-eslint/ban-types": [
       "error",
       {
         "types": {
