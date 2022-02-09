@@ -1,3 +1,8 @@
+import { type Head,
+         type Tail  } from 'typey-doo'
+
+export { type Head,
+         type Tail  }
 
 /**
  * Attempts to get the extension from a given path by splitting on the '.' character.
@@ -7,6 +12,18 @@
 export function extensionFromPath(path: string): string | TypeError {
   const extension = path.split('.').pop()
   return extension || new TypeError(`Unable to determine extension for path (${ path })`)
+}
+
+/** Returns the first element of an array, if it exists, otherwise undefined. */
+export function head<Ts extends unknown[]>(items: [...Ts]): Head<[...Ts]>
+{
+  return items.at(0) as Head<Ts>
+}
+
+/** Returns the elements following the first element of an array, or `[]` if the array has less than 2 elements. */
+export function tail<Ts extends unknown[]>(items: [...Ts])
+{
+  return items.slice(1) as Tail<Ts>
 }
 
 /**
@@ -27,22 +44,28 @@ export function toHex(value: number): `0x${ string }`
   return `0x${ value.toString(16) }`
 }
 
-/**
- * Type guard for both arrays and buffer array views
- * @param it The object under test
- */
+/** Type guard for arrays and buffer arrays */
 export function isArray<T extends ArrayLike<unknown>|ArrayBufferLike>(it: object): it is T
 {
   return Array.isArray(it) || isBufferArrayView(it)
 }
 
-/**
- * Type guard for buffer array views
- * @param it The object under test
- */
+/** Type guard for BufferArrayViews */
 export function isBufferArrayView(it: object): it is ArrayBufferLike
 {
   return 'byteLength' in it && 'byteOffset' in it
+}
+
+/** Type guard for numbers */
+export function isNumber(it: unknown): it is string
+{
+  return typeof it === 'number'
+}
+
+/** Type guard for strings */
+export function isString(it: unknown): it is string
+{
+  return typeof it === 'string'
 }
 
 /**
