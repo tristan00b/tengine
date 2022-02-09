@@ -1,17 +1,12 @@
-import { Error,
-         type IError } from './Errors'
 
 /**
  * Attempts to get the extension from a given path by splitting on the '.' character.
  * @param path
  * @returns The extension, if found
  */
-export function extensionFromPath(path: string): string | IError<'TYPE_ERROR'> {
+export function extensionFromPath(path: string): string | TypeError {
   const extension = path.split('.').pop()
-  return (extension)
-    ? extension // TS cannot determine this that this will never be undefined
-                // See: https://github.com/microsoft/TypeScript/issues/47292
-    : new Error('TYPE_ERROR', `Unable to determine extension for path (${ path })`)
+  return extension || new TypeError(`Unable to determine extension for path (${ path })`)
 }
 
 /**

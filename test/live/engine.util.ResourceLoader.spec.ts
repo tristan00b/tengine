@@ -1,9 +1,9 @@
-import { isError        } from '@engine/util/Errors'
+import { isError        } from '@engine/util/Error'
 import { ResourceLoader } from '@engine/util/ResourceLoader'
 
 describe('engine.ResourceLoader', () => {
 
-  const baseUrl = `${process.env.BASE_URL}`
+  const baseUrl = `${ process.env.BASE_URL }`
 
   test('it resolves the correct baseUrl', () => {
     expect(ResourceLoader.baseUrl).toBe(baseUrl)

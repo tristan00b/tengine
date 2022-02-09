@@ -1,18 +1,17 @@
-import { Game        } from '@engine/Game'
-import { Error,
-         fail,
-         type IError } from '@engine/util/Errors'
+import { Game       } from '@engine/Game'
+import { fail,
+         FatalError } from '@engine/util/Error'
 
 
 window.addEventListener('load', async () => {
   try {
     const canvas: HTMLCanvasElement =
       document.querySelector('#game-canvas') ??
-        fail(new Error('FATAL_ERROR', 'failed to locate document canvas element'))
+        fail(new FatalError('failed to locate document canvas element'))
 
     const context: WebGL2RenderingContext =
       canvas?.getContext('webgl2') ??
-        fail(new Error('FATAL_ERROR', 'failed to acquire WebGL2 rendering context'))
+        fail(new FatalError('failed to acquire WebGL2 rendering context'))
 
     const game = new Game(context, { loopOnce: false, showDebugInfo: true })
 
@@ -20,6 +19,6 @@ window.addEventListener('load', async () => {
   }
   catch (err)
   {
-    console.error(Error.toString(err as IError<string>))
+    console.error(err)
   }
 })

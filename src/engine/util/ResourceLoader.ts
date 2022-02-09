@@ -1,8 +1,10 @@
-import { concatErrors,
-         Error,
+import { ConfigError,
          fail,
-         isError,
-         type IError } from '@engine/util/Errors'
+         FatalError,
+         FetchError,
+         flattenErrors,
+         isError        } from '@engine/util/Error'
+
 
 /**
  * Gets the origin from which application is being hosted:
@@ -11,11 +13,11 @@ import { concatErrors,
  *     (i.e. corresponding to the base URL of the test server)
  * @returns The base URL of the local host
  */
-export function getBaseUrl(): string | IError<'CONFIG_ERROR'>
+export function getBaseUrl(): string | ConfigError
 {
   return (globalThis?.location as unknown) as string
-    ?? process?.env?.BASE_URL
-    ?? new Error('CONFIG_ERROR', 'failed to determine baseUrl')
+    ?? process?.env?.BASE_URL as string
+    ?? new ConfigError('failed to determine baseUrl')
 }
 
 /**
@@ -34,12 +36,10 @@ export class ResourceLoader
   static get baseUrl() { return this._baseUrl }
 
   static {
-    const result = getBaseUrl()
-    this._baseUrl  = !isError(result)
+    const result  = getBaseUrl()
+    this._baseUrl = !isError(result)
       ? result
-      : fail(
-        concatErrors(new Error('FATAL_ERROR', 'failed to determin baseUrl'), result)
-      )
+      : fail(flattenErrors(new FatalError('failed to determine baseUrl'), result))
   }
 
   /**
@@ -48,13 +48,13 @@ export class ResourceLoader
    * @param options Request init options (see [here](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) for details)
    * @returns
    */
-  static async load(url: URL, options?: RequestInit): Promise<Response|IError<'FETCH_ERROR'>>
+  static async load(url: URL, options?: RequestInit): Promise<Response | FetchError>
   {
     return fetch(url.href, options)
       .then((response: Response) =>
         isSuccessResponse(response)
           ? response
-          : new Error('FETCH_ERROR', `received [${response.status} - ${response.statusText}] for address ${url.href}`)
+          : new FetchError(`received [${ response.status } - ${ response.statusText }] for address ${ url.href }`)
       )
   }
 
@@ -78,7 +78,7 @@ export class ResourceLoader
    */
   static async loadAsset(path: string, options?: RequestInit)
   {
-    const url = new URL(`/assets/${path}`, this.baseUrl)
+    const url = new URL(`/assets/${ path }`, this.baseUrl)
     return this.load(url, options)
   }
 

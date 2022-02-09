@@ -1,4 +1,5 @@
-import { fail } from '@engine/util/Errors'
+import { ConfigError,
+         fail         } from '@engine/util/Error'
 
 
 /**
@@ -12,8 +13,6 @@ export interface GameOptions
   /** Sets whether to display debug info or not. */
   showDebugInfo?: boolean,
 }
-
-
 
 /**
  * Provides an interface for controlling updates to on-screen debug information display.
