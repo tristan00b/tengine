@@ -57,7 +57,7 @@ const loadTSConfigForBasePath = (basePath) => {
 
 class colour {
   static c(colour, msg) { return `\u001b[${ colour }m${ msg }\u001b[0m` }
-  static b(colour, msg) { return this.c(colour + ';1', msg)         }
+  static b(colour, msg) { return this.c(colour + ';1', msg)             }
 
   static red(msg)       { return this.c(31, msg) }
   static green(msg)     { return this.c(32, msg) }
