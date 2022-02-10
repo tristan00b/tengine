@@ -48,6 +48,19 @@ export interface FetchErrorConstructor extends ErrorConstructor
 {
 }
 
+
+export class NotImplementedError extends Error
+{
+}
+
+export interface NotImplementedError extends Error
+{
+}
+
+export interface NotImplementedErrorConstructor extends ErrorConstructor
+{
+}
+
 export class ShaderError extends Error
 {
 }
