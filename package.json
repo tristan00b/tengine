@@ -60,6 +60,7 @@
     "del": "^6.0.0",
     "esbuild": "^0.14.2",
     "eslint": "^8.7.0",
+    "gl-matrix": "^3.4.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-cli": "^2.3.0",
