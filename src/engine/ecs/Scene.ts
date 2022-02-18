@@ -5,6 +5,7 @@ import { NotImplementedError } from '@engine/util/Error'
 import { fr,
          keyFrom             } from '@engine/util/Utilities'
 
+export { keyFrom }
 
 /** Any method or constructor that returns an instance of */
 export type SceneConstructor = (context: WebGL2RenderingContext) => Scene
