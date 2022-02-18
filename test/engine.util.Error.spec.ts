@@ -7,6 +7,7 @@ import { BufferError,
          ShaderError,
          splitErrors    } from '@engine/util/Error'
 
+
 describe('engine.Errors', () => {
 
   const e0 = new FetchError('1st error')
@@ -29,32 +30,32 @@ describe('engine.Errors', () => {
     + 'ShaderError: 4th error'
     )
 
-    test('Gives TypeError when no arguments provided', () => {
+    it('Gives TypeError when no arguments provided', () => {
       const actual = flattenErrors()
       expect(actual instanceof TypeError).toBe(true)
     })
 
-    test('Gives back original argument when only one provided', () => {
+    it('Gives back original argument when only one provided', () => {
       const actual = flattenErrors(e0)
       expect(actual === e0).toBe(true)
     })
 
-    test('Preserves the type of the first error', () => {
+    it('Preserves the type of the first error', () => {
       expect(actual instanceof FetchError).toBe(true)
     })
 
-    test('Preserves the stack trace of the first error', () => {
+    it('Preserves the stack trace of the first error', () => {
       expect(actual.stack).toBe(e0.stack)
     })
 
-    test('Concats the error messages', () => {
+    it('Concats the error messages', () => {
       expect(actual.message).toBe(expected.message)
     })
   })
 
   describe('engine.Errors.isError', () => {
 
-    test('Correctly idendifies errors', () => {
+    it('Correctly idendifies errors', () => {
       const ex = flattenErrors(e0, e1)
       const ey = {
         message: 'This is not an error.'
@@ -75,7 +76,7 @@ describe('engine.Errors', () => {
     const errorCount = 3
     const otherCount = 4
 
-    test('splits errors out from a given array', () => {
+    it('splits errors out from a given array', () => {
       expect(errors.length).toBe(errorCount)
       expect(others.length).toBe(otherCount)
     })
