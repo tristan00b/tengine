@@ -1,8 +1,14 @@
-import { type Head,
-         type Tail  } from 'typey-doo'
+import { fr,
+         to,
+         type Head,
+         type TaggedType,
+         type Tail        } from 'typey-doo'
 
-export { type Head,
-         type Tail  }
+export { fr,
+         to,
+         type Head,
+         type TaggedType,
+         type Tail        }
 
 /**
  * Attempts to get the extension from a given path by splitting on the '.' character.
@@ -56,6 +62,11 @@ export function isBufferArrayView(it: object): it is ArrayBufferLike
   return 'byteLength' in it && 'byteOffset' in it
 }
 
+export function isNonNullable<T>(it: T): it is NonNullable<T>
+{
+  return (it ?? false) && true
+}
+
 /** Type guard for numbers */
 export function isNumber(it: unknown): it is string
 {
@@ -66,6 +77,20 @@ export function isNumber(it: unknown): it is string
 export function isString(it: unknown): it is string
 {
   return typeof it === 'string'
+}
+
+/**
+ * Takes an object and derives a key (string) from its type.
+ * @param obj The object to derive a key from
+ */
+export function keyFrom(obj: any): string
+{
+  // const _keyFrom = (obj: any) => obj instanceof Shader
+  //  ? Shader.name
+  //  : (obj?.name || obj?.constructor?.name || String(obj))
+  const _keyFrom = (obj: any) =>
+    (obj?.name || obj?.constructor?.name || String(obj))
+  return Array.isArray(obj) ? _keyFrom( obj[0] ) : _keyFrom( obj )
 }
 
 /**
