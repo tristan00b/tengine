@@ -5,17 +5,17 @@ describe('engine.ResourceLoader', () => {
 
   const baseUrl = `${ process.env.BASE_URL }`
 
-  test('it resolves the correct baseUrl', () => {
+  it('it resolves the correct baseUrl', () => {
     expect(ResourceLoader.baseUrl).toBe(baseUrl)
   })
 
-  test('it loads a local file', async () => {
+  it('it loads a local file', async () => {
     return ResourceLoader
       .loadLocal('app.config.json', { headers: { 'Content-Type': 'application/json' }})
       .then(async resp => expect(isError(resp)).toBe(false))
   })
 
-  test('it loads an asset file', () => {
+  it('it loads an asset file', () => {
     return ResourceLoader
       .loadAsset('shaders/basic.vert', { headers: { 'Content-Type': 'text/plain' }})
       .then(async resp => isError(resp) ? fail(resp) : await resp.text())
