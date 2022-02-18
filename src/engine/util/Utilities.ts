@@ -10,6 +10,13 @@ export { fr,
          type TaggedType,
          type Tail        }
 
+
+/** Returns it's argument, as received */
+export function id<T>(arg: T): T
+{
+  return arg
+}
+
 /**
  * Attempts to get the extension from a given path by splitting on the '.' character.
  * @param path
@@ -91,6 +98,12 @@ export function keyFrom(obj: any): string
   const _keyFrom = (obj: any) =>
     (obj?.name || obj?.constructor?.name || String(obj))
   return Array.isArray(obj) ? _keyFrom( obj[0] ) : _keyFrom( obj )
+}
+
+/** Takes an n-ary predicate function and returns its negation. */
+export function negate(f: (...args: unknown[]) => boolean)
+{
+  return (...args: unknown[]) => !f(...args)
 }
 
 /**
