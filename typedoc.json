@@ -1,7 +1,7 @@
 {
   "name": "TEngine Documentation",
 
-  "entryPoints": [ "src" ],
+  "entryPoints": [ "src/engine" ],
   "entryPointStrategy": "expand",
   "emit": "both",
 
@@ -9,7 +9,6 @@
   "cleanOutputDir": true,
   "githubPages": false,
 
-  "exclude": "**/*+(+(index|.spec|.test).ts|.json)",
   "excludeInternal": false,
   "excludeExternals": true,
   "externalPattern": [

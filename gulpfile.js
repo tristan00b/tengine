@@ -278,7 +278,8 @@ pluginOptions.typedoc = {
   version     : true,
   tsconfig    : './src/tsconfig.json',
   plugin      : [ 'typedoc-plugin-missing-exports' ],
-  logger      : 'none'
+  logger      : 'none',
+  sort        : ['static-first', 'enum-value-ascending']
 }
 
 
@@ -311,6 +312,8 @@ const clean = async () => {
 }
 
 const docs = async () => {
+  console.log(`${ paths.src.root }/engine/**/*.ts`)
+  // return src(`${ paths.src.root }/engine/**/*.ts`, { ignore: `${ paths.src.root }/game/**/*` })
   return src(`${ paths.src.root }/engine/**/*.ts`)
     .pipe(typedoc(pluginOptions.typedoc))
     .on('error', log.error)
