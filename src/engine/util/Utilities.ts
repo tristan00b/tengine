@@ -92,9 +92,6 @@ export function isString(it: unknown): it is string
  */
 export function keyFrom(obj: any): string
 {
-  // const _keyFrom = (obj: any) => obj instanceof Shader
-  //  ? Shader.name
-  //  : (obj?.name || obj?.constructor?.name || String(obj))
   const _keyFrom = (obj: any) =>
     (obj?.name || obj?.constructor?.name || String(obj))
   return Array.isArray(obj) ? _keyFrom( obj[0] ) : _keyFrom( obj )
@@ -121,3 +118,44 @@ export function split<Kind>(isKind: (item: unknown) => item is Kind, items: unkn
 
   return [lft, rgt]
 }
+
+/**
+ * Given a regular expression, returns a function that, given a (non-literal) template string and an object specifying
+ * a number of replacement values, applies the regular expression to a string and replaces the matches within using the
+ * corresponding replacements.
+ *
+ * @example
+ * ```ts
+ * const replace = makeTemplateReplacer(/\$\{\s*([a-zA-Z]\w*)\s*\}/gm)
+ *
+ * const template = '${ first }${ second }${ third }' // <= N.B. not a template literal!
+ * const replacements = { first: 'Hello', second: ', ', third: 'world!' }
+ *
+ * const result = replace(template, replacements)
+ *
+ * result === 'Hello, world!' // true!
+ * ```
+ */
+export const makeTemplateParser = (matcher: RegExp) => (template: string, replacements: Record<string, string>) => {
+  const matches = Array.from(matcher[Symbol.matchAll](template), m => ({
+    match: `${ m[0] }`.trim(),
+    name:  `${ m[1] }`.trim(),
+    // index: m.index // could use to optimize replacement
+  }))
+
+  return matches.reduce((result, { match, name }) =>
+    replacements[name]
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      ? result.replaceAll(match, replacements[name]!)
+      : result
+  , template)
+}
+
+/**
+ * Matches on JavaScript template literal style strings containing `${ ... }` placeholders, where each respective
+ * placeholder contains a single identifier. Identitfiers start with `_` or any character `a-zA-z`, followed by 0 or
+ * more alphanumeric or `_` characters.
+ *
+ * @see {@link makeTemplateParser}
+ */
+export const defaultTemplateParser = makeTemplateParser(/\$\{\s*([a-zA-Z_]\w*)\s*\}/gm)
