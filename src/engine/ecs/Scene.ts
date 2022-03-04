@@ -2,13 +2,25 @@ import { type Component      } from './Component'
 import { type Entity         } from './Entity'
 import { type System         } from './System'
 import { NotImplementedError } from '@engine/util/Error'
-import { fr,
-         keyFrom             } from '@engine/util/Utilities'
+import { fr
+       , keyFrom             } from '@engine/util/Utilities'
 
 export { keyFrom }
 
-/** Any method or constructor that returns an instance of */
-export type SceneConstructor = (context: WebGL2RenderingContext) => Scene
+/** Type for synchonous Scene factory methods or functions. */
+export interface SyncSceneFactory {
+  (context: WebGL2RenderingContext): Scene
+}
+
+/** Type for asynchronous Scene factory methods or functions. */
+export interface AsyncSceneFactory {
+  (context: WebGL2RenderingContext): Promise<Scene>
+}
+
+/** Type for Scene factory methods or functions. */
+export type SceneConstructor =
+  | SyncSceneFactory
+  | AsyncSceneFactory
 
 /**
 * A data structure for holding all ECS elements associated with a particular game scene
