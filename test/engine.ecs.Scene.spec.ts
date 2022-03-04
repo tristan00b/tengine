@@ -1,31 +1,31 @@
-import { Component } from '@engine/ecs/Component'
-import { Entity    } from '@engine/ecs/Entity'
-import { keyFrom,
-         Scene,    } from '@engine/ecs/Scene'
-import { Shader    } from '@engine/gfx/Shader'
-import { id        } from '@engine/util/Utilities'
+import { Component     } from '@engine/ecs/Component'
+import { Entity        } from '@engine/ecs/Entity'
+import { keyFrom
+       , Scene         } from '@engine/ecs/Scene'
+import { ShaderProgram } from '@engine/gfx/ShaderProgram'
+import { id            } from '@engine/util/Utilities'
 
 describe('engine.ecs.Scene', () => {
 
   describe('keyFrom', () => {
     it('handles shaders correctly', () => {
-      const shader = Shader.prototype
+      const shaderProgram = ShaderProgram.prototype
 
-      const allSame = keyFrom(Shader) === keyFrom(Shader)
-                  && keyFrom(shader) === keyFrom(Shader)
+      const allSame = keyFrom(ShaderProgram) === keyFrom(ShaderProgram)
+                   && keyFrom(shaderProgram) === keyFrom(ShaderProgram)
 
       expect(allSame).toBe(true)
 
       const scene  = new Scene
       const entity = new Entity
 
-      scene.registerComponentType(Shader)
+      scene.registerComponentType(ShaderProgram)
       scene.addEntity(entity)
-      scene.setComponent(entity, shader)
+      scene.setComponent(entity, shaderProgram)
 
-      expect(scene.isComponentTypeRegistered(Shader)).toBe(true)
-      expect(scene.getComponent(entity, Shader) === shader).toBe(true)
-      expect(scene.hasComponent(entity, Shader)).toBe(true)
+      expect(scene.isComponentTypeRegistered(ShaderProgram)).toBe(true)
+      expect(scene.getComponent(entity, ShaderProgram) === shaderProgram).toBe(true)
+      expect(scene.hasComponent(entity, ShaderProgram)).toBe(true)
     })
   })
 
