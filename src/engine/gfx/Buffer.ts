@@ -1,9 +1,8 @@
-import { type Bindable } from '@engine/gfx/Bindable'
 import { STATIC_DRAW   } from '@engine/gfx/constants'
 import { BufferError
        , fail          } from '@engine/util/Error'
 import { toHex         } from '@engine/util/Utilities'
-
+import { type Bindable } from '@engine/types/Bindable'
 
 /** Provides an interface to `WebGLBuffer` */
 export class Buffer implements Bindable<WebGLBuffer>
