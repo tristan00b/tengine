@@ -1,5 +1,7 @@
-import { ConfigError,
-         fail         } from '@engine/util/Error'
+import { Scene
+       , SceneConstructor } from '@engine/ecs/Scene'
+import { ConfigError
+       , fail             } from '@engine/util/Error'
 
 
 /**
@@ -13,6 +15,7 @@ export interface GameOptions
   /** Sets whether to display debug info or not. */
   showDebugInfo?: boolean,
 }
+
 
 /**
  * Provides an interface for controlling updates to on-screen debug information display.
@@ -31,23 +34,24 @@ export interface GameOptions
  */
 class DebugInfo
 {
-  protected _fps: number = 0
-  protected _cpu: number = 0
+  protected _fps = 0
+  protected _cpu = 0
 
   protected _fpsElement: HTMLElement
   protected _cpuElement: HTMLElement
 
-  protected _isRunning: boolean = false
-  protected _interval: number   = 1000 // milliseconds
+  protected _isRunning = false
+  protected _timeoutId = -1
+  protected _interval  = 1000 // milliseconds
 
   /**
    * @param updatesPerSecond The frequency at which to update the debug info display.
    */
-  constructor(updatesPerSecond:number = 1)
+  constructor(updatesPerSecond = 1)
   {
     this._interval   = updatesPerSecond * 1000
-    this._fpsElement = document.querySelector('debug-info > frame-rate') ?? fail({ kind: 'GAME_ERROR', message: 'failed to acquire page element <frame-rate>' })
-    this._cpuElement = document.querySelector('debug-info > compute-time') ?? fail({ kind: 'GAME_ERROR', message: 'failed to acquire page element <compute-time>' })
+    this._fpsElement = document.querySelector('debug-info > frame-rate') ?? fail('failed to acquire page element <frame-rate>', ConfigError)
+    this._cpuElement = document.querySelector('debug-info > compute-time') ?? fail('failed to acquire page element <compute-time>', ConfigError)
   }
 
   /**
@@ -72,7 +76,7 @@ class DebugInfo
   start()
   {
     this._isRunning = true
-    setTimeout(this.update.bind(this), this._interval)
+    this._timeoutId = setTimeout(this.loop.bind(this), this._interval)
   }
 
   /**
@@ -81,23 +85,24 @@ class DebugInfo
   stop()
   {
     this._isRunning = false
+    clearTimeout(this._timeoutId)
   }
 
   /**
    * Updates the debug info display with the values set for framerate (`fps`) and frame cpu time (`cpu`).
    */
-  update()
+  loop()
   {
-    let fps = this._fps.toFixed(2)
-    let cpu = this._cpu.toFixed(2)
-    let max = Math.max(fps.length, cpu.length)
+    const fps = this._fps.toFixed(2)
+    const cpu = this._cpu.toFixed(2)
+    const max = Math.max(fps.length, cpu.length)
 
-    this._fpsElement.innerText = `${fps.padStart(max, '0')} fps`
-    this._cpuElement.innerText = `${cpu.padStart(max, '0')} ms `
-    this._isRunning && setTimeout(this.update.bind(this), this._interval)
+    this._fpsElement.innerText = `${ fps.padStart(max, '0') } fps`
+    this._cpuElement.innerText = `${ cpu.padStart(max, '0') } ms `
+
+    this._isRunning && (this._timeoutId = setTimeout(this.loop.bind(this), this._interval))
   }
 }
-
 
 
 /**
@@ -106,22 +111,34 @@ class DebugInfo
  */
 export class Game
 {
-  protected _isRunning: boolean = false
-  protected _frameId: number = -1
+  protected _isRunning = false
+  protected _frameId = -1
 
-  protected _loopOnce: boolean = false
-  protected _showDebugInfo: boolean = false
+  protected _loopOnce = false
+  protected _showDebugInfo = false
   protected _debugInfo: DebugInfo
+
+  protected _scene!: Scene
 
   /**
    * @param context The context to be used in rendering
    * @param options Any options needed for configuring the engines
    */
-  constructor(context: WebGL2RenderingContext, options?: GameOptions)
+  constructor(context: WebGL2RenderingContext, MakeSene: SceneConstructor, options?: GameOptions)
   {
     this._loopOnce = options?.loopOnce ?? false
     this._showDebugInfo = options?.showDebugInfo ?? false
     this._debugInfo = new DebugInfo()
+
+    Promise.resolve(MakeSene(context))
+      .then(this.enterScene.bind(this))
+      .catch()
+  }
+
+  /** Sets the currently playing scene. */
+  enterScene(scene: Scene)
+  {
+    this._scene = scene
   }
 
   /**
@@ -140,30 +157,19 @@ export class Game
   stop()
   {
     this._isRunning = false
+    this._debugInfo.stop()
     window.cancelAnimationFrame(this._frameId)
   }
 
   /**
    * The main update method. You should not need to override this if you are working with the engine's built-in
-   * entity-component system.
+   * entity-component system (ecs).
    *
-   * @remark
-   * The arguments `t0` and `t1` are provided to `update` via the game loop method.
-   *
-   * @param t0 The time of the previous call to `loop`
-   * @param t1 The time of the current call to `loop`
+   * @param dt The time elapsed since the previous call
    */
-  update(t0: number, t1: number)
+  update(dt: number)
   {
-    const now = Date.now()
-
-    // Update stuff...
-
-    if (this._showDebugInfo)
-    {
-      this._debugInfo.fps = 1000/(t1 - t0)
-      this._debugInfo.cpu = Date.now() - now
-    }
+    this._scene.update(dt)
   }
 
   /**
@@ -176,7 +182,17 @@ export class Game
    */
   loop(t0: number, t1: number)
   {
-    this.update(t0, t1)
+    const now = Date.now()
+    const dt = t1 - t0 || Number.MIN_VALUE
+
+    this.update(dt)
+
+    if (this._showDebugInfo)
+    {
+      this._debugInfo.fps = 1000/dt
+      this._debugInfo.cpu = Date.now() - now
+    }
+
     this._isRunning && this.requestAnimationFrame(t1)
   }
 

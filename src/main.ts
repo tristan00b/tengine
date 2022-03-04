@@ -1,7 +1,7 @@
 import { Game       } from '@engine/Game'
 import { fail,
          FatalError } from '@engine/util/Error'
-
+import { MakeScene  } from '@game/scenes/triangle'
 
 window.addEventListener('load', async () => {
   try {
@@ -13,7 +13,7 @@ window.addEventListener('load', async () => {
       canvas?.getContext('webgl2') ??
         fail(new FatalError('failed to acquire WebGL2 rendering context'))
 
-    const game = new Game(context, { loopOnce: false, showDebugInfo: true })
+    const game = new Game(context, MakeScene, { loopOnce: false, showDebugInfo: true })
 
     game.start()
   }
