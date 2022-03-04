@@ -1,149 +1,287 @@
 /* Primitive Types -------------------------------------------------------------------------------------------------- */
 
 export const POINTS                                                  = 0x0000
+export type  POINTS                                                  = typeof POINTS
 export const LINES                                                   = 0x0001
+export type  LINES                                                   = typeof LINES
 export const LINE_LOOP                                               = 0x0002
+export type  LINE_LOOP                                               = typeof LINE_LOOP
 export const LINE_STRIP                                              = 0x0003
+export type  LINE_STRIP                                              = typeof LINE_STRIP
 export const TRIANGLES                                               = 0x0004
+export type  TRIANGLES                                               = typeof TRIANGLES
 export const TRIANGLE_STRIP                                          = 0x0005
+export type  TRIANGLE_STRIP                                          = typeof TRIANGLE_STRIP
 export const TRIANGLE_FAN                                            = 0x0006
+export type  TRIANGLE_FAN                                            = typeof TRIANGLE_FAN
 
 
 /* Data Types ------------------------------------------------------------------------------------------------------- */
 
 export const BYTE                                                    = 0x1400
+export type  BYTE                                                    = typeof BYTE
 export const UNSIGNED_BYTE                                           = 0x1401
+export type  UNSIGNED_BYTE                                           = typeof UNSIGNED_BYTE
 export const SHORT                                                   = 0x1402
+export type  SHORT                                                   = typeof SHORT
 export const UNSIGNED_SHORT                                          = 0x1403
+export type  UNSIGNED_SHORT                                          = typeof UNSIGNED_SHORT
 export const INT                                                     = 0x1404
+export type  INT                                                     = typeof INT
 export const UNSIGNED_INT                                            = 0x1405
+export type  UNSIGNED_INT                                            = typeof UNSIGNED_INT
 export const FLOAT                                                   = 0x1406
+export type  FLOAT                                                   = typeof FLOAT
 export const FLOAT_MAT2x3                                            = 0x8B65
+export type  FLOAT_MAT2x3                                            = typeof FLOAT_MAT2x3
 export const FLOAT_MAT2x4                                            = 0x8B66
+export type  FLOAT_MAT2x4                                            = typeof FLOAT_MAT2x4
 export const FLOAT_MAT3x2                                            = 0x8B67
+export type  FLOAT_MAT3x2                                            = typeof FLOAT_MAT3x2
 export const FLOAT_MAT3x4                                            = 0x8B68
+export type  FLOAT_MAT3x4                                            = typeof FLOAT_MAT3x4
 export const FLOAT_MAT4x2                                            = 0x8B69
+export type  FLOAT_MAT4x2                                            = typeof FLOAT_MAT4x2
 export const FLOAT_MAT4x3                                            = 0x8B6A
+export type  FLOAT_MAT4x3                                            = typeof FLOAT_MAT4x3
 export const UNSIGNED_INT_VEC2                                       = 0x8DC6
+export type  UNSIGNED_INT_VEC2                                       = typeof UNSIGNED_INT_VEC2
 export const UNSIGNED_INT_VEC3                                       = 0x8DC7
+export type  UNSIGNED_INT_VEC3                                       = typeof UNSIGNED_INT_VEC3
 export const UNSIGNED_INT_VEC4                                       = 0x8DC8
+export type  UNSIGNED_INT_VEC4                                       = typeof UNSIGNED_INT_VEC4
 export const UNSIGNED_NORMALIZED                                     = 0x8C17
+export type  UNSIGNED_NORMALIZED                                     = typeof UNSIGNED_NORMALIZED
 export const SIGNED_NORMALIZED                                       = 0x8F9C
+export type  SIGNED_NORMALIZED                                       = typeof SIGNED_NORMALIZED
 
 
 /* Uniform Types ---------------------------------------------------------------------------------------------------- */
 
 export const FLOAT_VEC2                                              = 0x8B50
+export type  FLOAT_VEC2                                              = typeof FLOAT_VEC2
 export const FLOAT_VEC3                                              = 0x8B51
+export type  FLOAT_VEC3                                              = typeof FLOAT_VEC3
 export const FLOAT_VEC4                                              = 0x8B52
+export type  FLOAT_VEC4                                              = typeof FLOAT_VEC4
 export const INT_VEC2                                                = 0x8B53
+export type  INT_VEC2                                                = typeof INT_VEC2
 export const INT_VEC3                                                = 0x8B54
+export type  INT_VEC3                                                = typeof INT_VEC3
 export const INT_VEC4                                                = 0x8B55
+export type  INT_VEC4                                                = typeof INT_VEC4
 export const BOOL                                                    = 0x8B56
+export type  BOOL                                                    = typeof BOOL
 export const BOOL_VEC2                                               = 0x8B57
+export type  BOOL_VEC2                                               = typeof BOOL_VEC2
 export const BOOL_VEC3                                               = 0x8B58
+export type  BOOL_VEC3                                               = typeof BOOL_VEC3
 export const BOOL_VEC4                                               = 0x8B59
+export type  BOOL_VEC4                                               = typeof BOOL_VEC4
 export const FLOAT_MAT2                                              = 0x8B5A
+export type  FLOAT_MAT2                                              = typeof FLOAT_MAT2
 export const FLOAT_MAT3                                              = 0x8B5B
+export type  FLOAT_MAT3                                              = typeof FLOAT_MAT3
 export const FLOAT_MAT4                                              = 0x8B5C
+export type  FLOAT_MAT4                                              = typeof FLOAT_MAT4
 export const SAMPLER_2D                                              = 0x8B5E
+export type  SAMPLER_2D                                              = typeof SAMPLER_2D
 export const SAMPLER_CUBE                                            = 0x8B60
+export type  SAMPLER_CUBE                                            = typeof SAMPLER_CUBE
 
 
 /* Faces ------------------------------------------------------------------------------------------------------------ */
 
 export const CULL_FACE                                               = 0x0B44
+export type  CULL_FACE                                               = typeof CULL_FACE
 export const FRONT                                                   = 0x0404
+export type  FRONT                                                   = typeof FRONT
 export const BACK                                                    = 0x0405
+export type  BACK                                                    = typeof BACK
 export const FRONT_AND_BACK                                          = 0x0408
+export type  FRONT_AND_BACK                                          = typeof FRONT_AND_BACK
 export const CW                                                      = 0x0900
+export type  CW                                                      = typeof CW
 export const CCW                                                     = 0x0901
+export type  CCW                                                     = typeof CCW
 
 
-/* Framebuffers & Renderbuffers ------------------------------------------------------------------------------------- */
+/* Buffers ---------------------------------------------------------------------------------------------------------- */
+
+export const STATIC_DRAW                                             = 0x88E4
+export type  STATIC_DRAW                                             = typeof STATIC_DRAW
+export const STREAM_DRAW                                             = 0x88E0
+export type  STREAM_DRAW                                             = typeof STREAM_DRAW
+export const DYNAMIC_DRAW                                            = 0x88E8
+export type  DYNAMIC_DRAW                                            = typeof DYNAMIC_DRAW
+export const ARRAY_BUFFER                                            = 0x8892
+export type  ARRAY_BUFFER                                            = typeof ARRAY_BUFFER
+export const ELEMENT_ARRAY_BUFFER                                    = 0x8893
+export type  ELEMENT_ARRAY_BUFFER                                    = typeof ELEMENT_ARRAY_BUFFER
+export const BUFFER_SIZE                                             = 0x8764
+export type  BUFFER_SIZE                                             = typeof BUFFER_SIZE
+export const BUFFER_USAGE                                            = 0x8765
+export type  BUFFER_USAGE                                            = typeof BUFFER_USAGE
 
 export const FRAMEBUFFER                                             = 0x8D40
+export type  FRAMEBUFFER                                             = typeof FRAMEBUFFER
 export const RENDERBUFFER                                            = 0x8D41
+export type  RENDERBUFFER                                            = typeof RENDERBUFFER
 export const RGBA4                                                   = 0x8056
+export type  RGBA4                                                   = typeof RGBA4
 export const RGB5_A1                                                 = 0x8057
+export type  RGB5_A1                                                 = typeof RGB5_A1
 export const RGB565                                                  = 0x8D62
+export type  RGB565                                                  = typeof RGB565
 export const DEPTH_COMPONENT16                                       = 0x81A5
+export type  DEPTH_COMPONENT16                                       = typeof DEPTH_COMPONENT16
 export const STENCIL_INDEX8                                          = 0x8D48
+export type  STENCIL_INDEX8                                          = typeof STENCIL_INDEX8
 export const DEPTH_STENCIL                                           = 0x84F9
+export type  DEPTH_STENCIL                                           = typeof DEPTH_STENCIL
 export const RENDERBUFFER_WIDTH                                      = 0x8D42
+export type  RENDERBUFFER_WIDTH                                      = typeof RENDERBUFFER_WIDTH
 export const RENDERBUFFER_HEIGHT                                     = 0x8D43
+export type  RENDERBUFFER_HEIGHT                                     = typeof RENDERBUFFER_HEIGHT
 export const RENDERBUFFER_INTERNAL_FORMAT                            = 0x8D44
+export type  RENDERBUFFER_INTERNAL_FORMAT                            = typeof RENDERBUFFER_INTERNAL_FORMAT
 export const RENDERBUFFER_RED_SIZE                                   = 0x8D50
+export type  RENDERBUFFER_RED_SIZE                                   = typeof RENDERBUFFER_RED_SIZE
 export const RENDERBUFFER_GREEN_SIZE                                 = 0x8D51
+export type  RENDERBUFFER_GREEN_SIZE                                 = typeof RENDERBUFFER_GREEN_SIZE
 export const RENDERBUFFER_BLUE_SIZE                                  = 0x8D52
+export type  RENDERBUFFER_BLUE_SIZE                                  = typeof RENDERBUFFER_BLUE_SIZE
 export const RENDERBUFFER_ALPHA_SIZE                                 = 0x8D53
+export type  RENDERBUFFER_ALPHA_SIZE                                 = typeof RENDERBUFFER_ALPHA_SIZE
 export const RENDERBUFFER_DEPTH_SIZE                                 = 0x8D54
+export type  RENDERBUFFER_DEPTH_SIZE                                 = typeof RENDERBUFFER_DEPTH_SIZE
 export const RENDERBUFFER_STENCIL_SIZE                               = 0x8D55
+export type  RENDERBUFFER_STENCIL_SIZE                               = typeof RENDERBUFFER_STENCIL_SIZE
 export const FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE                      = 0x8CD0
+export type  FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE                      = typeof FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE
 export const FRAMEBUFFER_ATTACHMENT_OBJECT_NAME                      = 0x8CD1
+export type  FRAMEBUFFER_ATTACHMENT_OBJECT_NAME                      = typeof FRAMEBUFFER_ATTACHMENT_OBJECT_NAME
 export const FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL                    = 0x8CD2
+export type  FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL                    = typeof FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL
 export const FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE            = 0x8CD3
+export type  FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE            = typeof FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE
 export const COLOR_ATTACHMENT0                                       = 0x8CE0
+export type  COLOR_ATTACHMENT0                                       = typeof COLOR_ATTACHMENT0
 export const DEPTH_ATTACHMENT                                        = 0x8D00
+export type  DEPTH_ATTACHMENT                                        = typeof DEPTH_ATTACHMENT
 export const STENCIL_ATTACHMENT                                      = 0x8D20
+export type  STENCIL_ATTACHMENT                                      = typeof STENCIL_ATTACHMENT
 export const DEPTH_STENCIL_ATTACHMENT                                = 0x821A
-export const NONE                                                    = 0
+export type  DEPTH_STENCIL_ATTACHMENT                                = typeof DEPTH_STENCIL_ATTACHMENT
+export const NONE                                                    = 0x0000
+export type  NONE                                                    = typeof NONE
 export const FRAMEBUFFER_COMPLETE                                    = 0x8CD5
+export type  FRAMEBUFFER_COMPLETE                                    = typeof FRAMEBUFFER_COMPLETE
 export const FRAMEBUFFER_INCOMPLETE_ATTACHMENT                       = 0x8CD6
+export type  FRAMEBUFFER_INCOMPLETE_ATTACHMENT                       = typeof FRAMEBUFFER_INCOMPLETE_ATTACHMENT
 export const FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT               = 0x8CD7
+export type  FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT               = typeof FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT
 export const FRAMEBUFFER_INCOMPLETE_DIMENSIONS                       = 0x8CD9
+export type  FRAMEBUFFER_INCOMPLETE_DIMENSIONS                       = typeof FRAMEBUFFER_INCOMPLETE_DIMENSIONS
 export const FRAMEBUFFER_UNSUPPORTED                                 = 0x8CDD
+export type  FRAMEBUFFER_UNSUPPORTED                                 = typeof FRAMEBUFFER_UNSUPPORTED
 export const FRAMEBUFFER_BINDING                                     = 0x8CA6
+export type  FRAMEBUFFER_BINDING                                     = typeof FRAMEBUFFER_BINDING
 export const RENDERBUFFER_BINDING                                    = 0x8CA7
+export type  RENDERBUFFER_BINDING                                    = typeof RENDERBUFFER_BINDING
 export const MAX_RENDERBUFFER_SIZE                                   = 0x84E8
+export type  MAX_RENDERBUFFER_SIZE                                   = typeof MAX_RENDERBUFFER_SIZE
 export const INVALID_FRAMEBUFFER_OPERATION                           = 0x0506
+export type  INVALID_FRAMEBUFFER_OPERATION                           = typeof INVALID_FRAMEBUFFER_OPERATION
 export const FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING                   = 0x8210
+export type  FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING                   = typeof FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING
 export const FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE                   = 0x8211
+export type  FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE                   = typeof FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE
 export const FRAMEBUFFER_ATTACHMENT_RED_SIZE                         = 0x8212
+export type  FRAMEBUFFER_ATTACHMENT_RED_SIZE                         = typeof FRAMEBUFFER_ATTACHMENT_RED_SIZE
 export const FRAMEBUFFER_ATTACHMENT_GREEN_SIZE                       = 0x8213
+export type  FRAMEBUFFER_ATTACHMENT_GREEN_SIZE                       = typeof FRAMEBUFFER_ATTACHMENT_GREEN_SIZE
 export const FRAMEBUFFER_ATTACHMENT_BLUE_SIZE                        = 0x8214
+export type  FRAMEBUFFER_ATTACHMENT_BLUE_SIZE                        = typeof FRAMEBUFFER_ATTACHMENT_BLUE_SIZE
 export const FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE                       = 0x8215
+export type  FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE                       = typeof FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE
 export const FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE                       = 0x8216
+export type  FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE                       = typeof FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE
 export const FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE                     = 0x8217
+export type  FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE                     = typeof FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE
 export const FRAMEBUFFER_DEFAULT                                     = 0x8218
+export type  FRAMEBUFFER_DEFAULT                                     = typeof FRAMEBUFFER_DEFAULT
 export const DEPTH24_STENCIL8                                        = 0x88F0
+export type  DEPTH24_STENCIL8                                        = typeof DEPTH24_STENCIL8
 export const DRAW_FRAMEBUFFER_BINDING                                = 0x8CA6
+export type  DRAW_FRAMEBUFFER_BINDING                                = typeof DRAW_FRAMEBUFFER_BINDING
 export const READ_FRAMEBUFFER                                        = 0x8CA8
+export type  READ_FRAMEBUFFER                                        = typeof READ_FRAMEBUFFER
 export const DRAW_FRAMEBUFFER                                        = 0x8CA9
+export type  DRAW_FRAMEBUFFER                                        = typeof DRAW_FRAMEBUFFER
 export const READ_FRAMEBUFFER_BINDING                                = 0x8CAA
+export type  READ_FRAMEBUFFER_BINDING                                = typeof READ_FRAMEBUFFER_BINDING
 export const RENDERBUFFER_SAMPLES                                    = 0x8CAB
+export type  RENDERBUFFER_SAMPLES                                    = typeof RENDERBUFFER_SAMPLES
 export const FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER                    = 0x8CD4
+export type  FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER                    = typeof FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER
 export const FRAMEBUFFER_INCOMPLETE_MULTISAMPLE                      = 0x8D56
+export type  FRAMEBUFFER_INCOMPLETE_MULTISAMPLE                      = typeof FRAMEBUFFER_INCOMPLETE_MULTISAMPLE
 
 
 /* Shaders ---------------------------------------------------------------------------------------------------------- */
 
 export const FRAGMENT_SHADER                                         = 0x8B30
+export type  FRAGMENT_SHADER                                         = typeof FRAGMENT_SHADER
 export const VERTEX_SHADER                                           = 0x8B31
+export type  VERTEX_SHADER                                           = typeof VERTEX_SHADER
 export const COMPILE_STATUS                                          = 0x8B81
+export type  COMPILE_STATUS                                          = typeof COMPILE_STATUS
 export const DELETE_STATUS                                           = 0x8B80
+export type  DELETE_STATUS                                           = typeof DELETE_STATUS
 export const LINK_STATUS                                             = 0x8B82
+export type  LINK_STATUS                                             = typeof LINK_STATUS
 export const VALIDATE_STATUS                                         = 0x8B83
+export type  VALIDATE_STATUS                                         = typeof VALIDATE_STATUS
 export const ATTACHED_SHADERS                                        = 0x8B85
+export type  ATTACHED_SHADERS                                        = typeof ATTACHED_SHADERS
 export const ACTIVE_ATTRIBUTES                                       = 0x8B89
+export type  ACTIVE_ATTRIBUTES                                       = typeof ACTIVE_ATTRIBUTES
 export const ACTIVE_UNIFORMS                                         = 0x8B86
+export type  ACTIVE_UNIFORMS                                         = typeof ACTIVE_UNIFORMS
 export const MAX_VERTEX_ATTRIBS                                      = 0x8869
+export type  MAX_VERTEX_ATTRIBS                                      = typeof MAX_VERTEX_ATTRIBS
 export const MAX_VERTEX_UNIFORM_VECTORS                              = 0x8DFB
+export type  MAX_VERTEX_UNIFORM_VECTORS                              = typeof MAX_VERTEX_UNIFORM_VECTORS
 export const MAX_VARYING_VECTORS                                     = 0x8DFC
+export type  MAX_VARYING_VECTORS                                     = typeof MAX_VARYING_VECTORS
 export const MAX_COMBINED_TEXTURE_IMAGE_UNITS                        = 0x8B4D
+export type  MAX_COMBINED_TEXTURE_IMAGE_UNITS                        = typeof MAX_COMBINED_TEXTURE_IMAGE_UNITS
 export const MAX_VERTEX_TEXTURE_IMAGE_UNITS                          = 0x8B4C
+export type  MAX_VERTEX_TEXTURE_IMAGE_UNITS                          = typeof MAX_VERTEX_TEXTURE_IMAGE_UNITS
 export const MAX_TEXTURE_IMAGE_UNITS                                 = 0x8872
+export type  MAX_TEXTURE_IMAGE_UNITS                                 = typeof MAX_TEXTURE_IMAGE_UNITS
 export const MAX_FRAGMENT_UNIFORM_VECTORS                            = 0x8DFD
+export type  MAX_FRAGMENT_UNIFORM_VECTORS                            = typeof MAX_FRAGMENT_UNIFORM_VECTORS
 export const SHADER_TYPE                                             = 0x8B4F
+export type  SHADER_TYPE                                             = typeof SHADER_TYPE
 export const SHADING_LANGUAGE_VERSION                                = 0x8B8C
+export type  SHADING_LANGUAGE_VERSION                                = typeof SHADING_LANGUAGE_VERSION
 export const CURRENT_PROGRAM                                         = 0x8B8D
+export type  CURRENT_PROGRAM                                         = typeof CURRENT_PROGRAM
 
 
 /* Errors ----------------------------------------------------------------------------------------------------------- */
 
-export const NO_ERROR                                                = 0
+export const NO_ERROR                                                = 0x0000
+export type  NO_ERROR                                                = typeof NO_ERROR
 export const INVALID_ENUM                                            = 0x0500
+export type  INVALID_ENUM                                            = typeof INVALID_ENUM
 export const INVALID_VALUE                                           = 0x0501
+export type  INVALID_VALUE                                           = typeof INVALID_VALUE
 export const INVALID_OPERATION                                       = 0x0502
+export type  INVALID_OPERATION                                       = typeof INVALID_OPERATION
 export const OUT_OF_MEMORY                                           = 0x0505
+export type  OUT_OF_MEMORY                                           = typeof OUT_OF_MEMORY
 export const CONTEXT_LOST_WEBGL                                      = 0x9242
+export type  CONTEXT_LOST_WEBGL                                      = typeof CONTEXT_LOST_WEBGL
