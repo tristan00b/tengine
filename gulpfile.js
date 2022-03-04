@@ -90,12 +90,11 @@ const configParser = (defaults) => {
     process.exit(1)
   }
 
-  const checkOptions = (argv) => {
+  const checkOptions = (argv) =>
     // http://yargs.js.org/docs/#api-reference-checkfn-globaltrue
     // - If URL throws from a malformed url, then the check fails
     // - If neither `port` nor `host` are truthy, then the check fails
-    return !!(argv.port || (argv.host && new URL(argv.host)))
-  }
+    !!(argv.port || (argv.host && new URL(argv.host)))
 
   const getCommand = (argv) =>
     argv._[0] ?? 'default'
@@ -113,16 +112,16 @@ const configParser = (defaults) => {
     })
   }
 
-  const extractArgs = (yargs) => {
-    return yargs.parse()
-  }
+  const extractArgs = (yargs) =>
+    yargs.parse()
 
-  const parse = (args) => {
+
+  const _parse = (args) => {
     const yargs = YARGS(hideBin(args))
 
     return yargs
       .command('watch',
-      'Build in development mode with watch enabled.',
+        'Build in development mode with watch enabled.',
         (yargs) => yargs
           .option('port', {
             describe: 'Sets the port that the test server listens to.',
@@ -154,16 +153,16 @@ const configParser = (defaults) => {
         'Runs the test suite',
         (yargs) => yargs
         .option('host', {
-            describe: 'Sets the base URL for tests to fetch resources from. Has no effect without specifying the --live flag.',
-            type: 'string',
-            default: defaultHost
-          })
-          .option('live', {
-            alias: ['L'],
-            description: 'Runs all tests requiring a connection to testing server. No online tests will be executed without specifying this option.',
-          })
-          .check(checkOptions)
-          .help('info')
+          describe: 'Sets the base URL for tests to fetch resources from. Has no effect without specifying the --live flag.',
+          type: 'string',
+          default: defaultHost
+        })
+        .option('live', {
+          alias: ['L'],
+          description: 'Runs all tests requiring a connection to testing server. No online tests will be executed without specifying this option.',
+        })
+        .check(checkOptions)
+        .help('info')
       )
       .hide('version')
       .hide('help')
@@ -174,12 +173,12 @@ const configParser = (defaults) => {
       .fail(handleFailure)
   }
 
-  const parser = args => Promise.resolve(args)
-    .then(parse)
+  const parse = (args) => Promise.resolve(args)
+    .then(_parse)
     .then(coerceOptions)
     .then(extractArgs)
 
-  return { parse: parser }
+  return { parse }
 }
 
 
@@ -188,8 +187,8 @@ const configParser = (defaults) => {
 // Config
 // ---------------------------------------------------------------------------------------------------------------------
 
-const argv         = await configParser({ host: 'http://localhost:4040' }).parse(process.argv)
-const config       = {}
+const argv   = await configParser({ host: 'http://localhost:4040' }).parse(process.argv)
+const config = {}
 
 config.projectName = 'TEngine'
 config.srcroot     = path.resolve('./src')
@@ -312,8 +311,6 @@ const clean = async () => {
 }
 
 const docs = async () => {
-  console.log(`${ paths.src.root }/engine/**/*.ts`)
-  // return src(`${ paths.src.root }/engine/**/*.ts`, { ignore: `${ paths.src.root }/game/**/*` })
   return src(`${ paths.src.root }/engine/**/*.ts`)
     .pipe(typedoc(pluginOptions.typedoc))
     .on('error', log.error)
