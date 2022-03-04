@@ -72,3 +72,15 @@ export interface ShaderError extends Error
 export interface ShaderErrorConstructor extends ErrorConstructor
 {
 }
+
+export class TextureError extends Error
+{
+}
+
+export interface TextureError extends Error
+{
+}
+
+export interface TextureErrorConstructor extends ErrorConstructor
+{
+}
