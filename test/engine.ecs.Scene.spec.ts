@@ -3,6 +3,7 @@ import { Entity        } from '@engine/ecs/Entity'
 import { keyFrom
        , Scene         } from '@engine/ecs/Scene'
 import { ShaderProgram } from '@engine/gfx/ShaderProgram'
+import { ConfigError   } from '@engine/util/Error'
 import { id            } from '@engine/util/Utilities'
 
 describe('engine.ecs.Scene', () => {
@@ -60,7 +61,8 @@ describe('engine.ecs.Scene', () => {
         const scene = new Scene
         const entity = new Entity
 
-        scene.addEntity(entity)
+        expect(() => scene.addEntity(entity)).not.toThrow()
+        expect(() => scene.addEntity(entity)).toThrowError(ConfigError)
 
         /* eslint-disable */
         /* @ts-ignore     */
@@ -109,9 +111,8 @@ describe('engine.ecs.Scene', () => {
 
       it('does not re-register component types', () => {
         const scene = new Scene
-        const success1 = scene.registerComponentType(C0)
-        const success2 = scene.registerComponentType(C0)
-        expect(success1 && !success2).toBe(true)
+        expect(() => scene.registerComponentType(C0)).not.toThrow()
+        expect(() => scene.registerComponentType(C0)).toThrowError(ConfigError)
       })
     })
 
@@ -220,7 +221,7 @@ describe('engine.ecs.Scene', () => {
 
       it('does not set components of unregistered types', function () {
         const c3 = new C3
-        scene.setComponent(entity, c3)
+        expect(() => scene.setComponent(entity, c3)).toThrowError(ConfigError)
         /* eslint-disable */
         /* @ts-ignore     */
         expect(scene._components[ keyFrom(C3) ]).toBeUndefined()
@@ -229,7 +230,7 @@ describe('engine.ecs.Scene', () => {
 
       it('does not set components on entities that have not yet been added', function () {
         const notAdded = new Entity
-        scene.setComponent(notAdded, new C0)
+        expect(() => scene.setComponent(notAdded, new C0)).toThrowError(ConfigError)
         /* eslint-disable */
         /* @ts-ignore     */
         expect(scene._components[ keyFrom(C0) ][ notAdded.id ]).toBeUndefined()

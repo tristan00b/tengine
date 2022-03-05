@@ -1,7 +1,8 @@
-import { type Component      } from './Component'
-import { type Entity         } from './Entity'
-import { type System         } from './System'
-import { NotImplementedError } from '@engine/util/Error'
+import { type Component      } from '@engine/ecs/Component'
+import { type Entity         } from '@engine/ecs/Entity'
+import { type System         } from '@engine/ecs/System'
+import { ConfigError, fail
+       , NotImplementedError } from '@engine/util/Error'
 import { fr
        , keyFrom             } from '@engine/util/Utilities'
 
@@ -58,16 +59,14 @@ export class Scene
   /** Returns the array of systems attached to this instance. */
   get systems() { return this._systems }
 
-  /** Adds one or more enetities to the scene */
+  /**
+   * Adds one or more enetities to the scene
+   * @throws ConfigError Throws when `entity` has already been added.
+   */
   addEntity(entity: Entity)
   {
-    const hasEntity = this.hasEntity(entity)
-
-    hasEntity
-      ? console.warn(`Entity (id: ${ entity.id }) already added`)
-      : this._entities[ fr(entity.id) ] = entity
-
-    return !hasEntity
+    this.hasEntity(entity) && fail(new ConfigError(`Entity (id: ${ entity.id }) already added`))
+    this._entities[ fr(entity.id) ] = entity
   }
 
   /** Tells whether an entity as been added to the scene */
@@ -100,16 +99,14 @@ export class Scene
     return keyFrom(Type) in this._components
   }
 
-  /** Registers a new `Component` type. */
+  /**
+   * Registers a new component type.
+   * @throws ConfigError Throws when component type is already registered.
+   */
   registerComponentType(Type: Component)
   {
-    const isRegistered = this.isComponentTypeRegistered(Type)
-
-    isRegistered
-      ? console.warn(`ComponentType ${ Type.name } already registered`)
-      : this._components[keyFrom(Type)] = []
-
-    return !isRegistered
+    this.isComponentTypeRegistered(Type) && fail(new ConfigError(`ComponentType ${ Type.name } already registered`))
+    this._components[keyFrom(Type)] = []
   }
 
   /**
@@ -120,19 +117,19 @@ export class Scene
    * const c1 = new Component(...)
    * scene.setComponent(entity, c0) // => entity now has c0 associated with it
    * scene.setComponent(entity, c1) // => c0 has been overwritten with c1
+   * @throws ConfigError Throws when `enitity` has not been added to the scene prior to calling
+   * @throws ConfigError Throws when `component`'s type has not been regiisterd prior to calling
    */
   setComponent(entity: Entity, component: Component)
   {
     const haveEntity = this.hasEntity(entity)
     const components = this._components[ keyFrom(component) ]
 
-    if (haveEntity)
-      if (components)
-        components[ fr(entity.id) ] = component
-      else
-        console.warn(`Component types must be registered before use (received: ${ keyFrom(component) })`)
-    else
-      console.warn('Entity must be added prior to setting its components')
+    haveEntity || fail(new ConfigError('Entity must be added prior to setting its components'))
+    components ?? fail(new ConfigError(`Component types must be registered before use (received: ${ component })`))
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    components![ fr(entity.id) ] = component
   }
 
   /**
@@ -179,12 +176,12 @@ export class Scene
   /** @todo To be implemented */
   static deflate(): never
   {
-    throw new NotImplementedError('deflate is not emplemented')
+    fail(new NotImplementedError('deflate is not emplemented'))
   }
 
   /** @todo To be implemented */
   static inflate(data: unknown): never
   {
-    throw new NotImplementedError('inflate is not implemented')
+    fail(new NotImplementedError('inflate is not implemented'))
   }
 }
