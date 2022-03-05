@@ -1,6 +1,6 @@
-import { type Bindable } from '@engine/gfx/Bindable'
 import { fail
        , TextureError  } from '@engine/util/Error'
+import { type Bindable } from '@engine/types/Bindable'
 
 /** Wraps the `WebGLTexture` interface. */
 export class Texture implements Bindable<WebGLTexture>

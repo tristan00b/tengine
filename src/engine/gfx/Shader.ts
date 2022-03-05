@@ -1,7 +1,6 @@
 import { COMPILE_STATUS
        , FRAGMENT_SHADER
-       , VERTEX_SHADER           } from '@engine/gfx/constants'
-import { type Deletable          } from '@engine/gfx/Deletable'
+       , VERTEX_SHADER         } from '@engine/gfx/constants'
 import { fail
        , isError
        , ShaderError
@@ -9,7 +8,7 @@ import { fail
 import { ResourceLoader        } from '@engine/util/ResourceLoader'
 import { defaultTemplateParser
        , toHex                 } from '@engine/util/Utilities'
-
+import { type Deletable        } from '@engine/types/Deletable'
 
 /** Valid shader types */
 export type ShaderType =

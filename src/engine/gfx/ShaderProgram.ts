@@ -1,10 +1,10 @@
 import { Component     } from '@engine/ecs/Component'
-import { type Bindable } from '@engine/gfx/Bindable'
 import { LINK_STATUS   } from '@engine/gfx/constants'
 import { Shader        } from '@engine/gfx/Shader'
 import { fail
        , ShaderError   } from '@engine/util/Error'
 import { toHex         } from '@engine/util/Utilities'
+import { type Bindable } from '@engine/types/Bindable'
 
 export class ShaderProgram extends Component implements Bindable<WebGLProgram>
 {
