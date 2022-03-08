@@ -8,8 +8,10 @@
     "docs": "typedoc",
     "test": "gulp test",
     "test:live": "gulp test --live",
-    "clean": "rm -r ./build/public*",
-    "clean:all": "rm -r ./build/*"
+    "clean": "run-s clean:build",
+    "clean:pub": "rm -r ./build/public*",
+    "clean:build": "rm -r ./build/*",
+    "clean:deps": "rm package-lock.json && rm -r ./node_modules/"
   },
   "repository": {
     "type": "git",
