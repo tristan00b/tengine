@@ -6,13 +6,6 @@
  */
 declare var process
 
-
-interface ArrayBufferView {
-  /** The number of elements of the array (i.e. byteLength / BYTES_PER_ELEMENT). */
-  length: number
-}
-
-
 interface WebGL2RenderingContextOverloads
 {
   // TS enforces null over undefined which incurs results in unnecessary
